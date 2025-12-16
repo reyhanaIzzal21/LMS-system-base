@@ -13,6 +13,17 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    // Route Prefix admin
+    Route::prefix('admin')->middleware('role:admin')->group(function () {
+        Route::view('dashboard', 'admin.dashboard')->name('admin.dashboard');
+        // Tambah route admin lainnya di sini
+    });
+
+    // Route Prefix teacher
+    Route::prefix('teacher')->middleware('role:teacher')->group(function () {
+        Route::view('dashboard', 'teacher.dashboard')->name('teacher.dashboard');
+    });
+
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');

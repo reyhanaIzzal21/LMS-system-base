@@ -1,4 +1,4 @@
-<header class="full-container w-full text-sm py-3 px-5 bg-white lg:sticky z-30">
+<header class="sticky top-0 w-full text-sm py-3 px-5 bg-white z-30 shadow-sm border-b border-gray-200">
     <nav class=" w-full  flex items-center justify-between " aria-label="Global">
         <ul class="icon-nav flex items-center gap-4">
             <li class="relative xl:hidden">

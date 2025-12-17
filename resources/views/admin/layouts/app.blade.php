@@ -22,20 +22,17 @@
 <body class="bg-info/5">
     <main>
         <!--start the project-->
-        <div id="main-wrapper" class="flex ">
+        <div id="main-wrapper" class="flex h-screen">
             @include('admin.layouts.sidebar')
 
-            <div class="w-full page-wrapper overflow-hidden">
-                <!--  Header Start -->
-                <div class=" w-full">
-                    <!-- ========== HEADER ========== -->
+            <div class="w-full page-wrapper flex flex-col">
+                <!-- HEADER -->
+                <div class="shrink-0">
                     @include('admin.layouts.header')
-                    <!-- ========== END HEADER ========== -->
                 </div>
-                <!--  Header End -->
 
-                <!-- Main Content -->
-                <main class="h-full overflow-y-auto  max-w-full  pt-4">
+                <!-- CONTENT (SCROLL DI SINI) -->
+                <main class="flex-1 overflow-y-auto px-4 pb-4">
                     @yield('content')
                 </main>
             </div>
@@ -58,6 +55,9 @@
     <script src="{{ asset('assets/libs/@preline/dropdown/index.js') }} "></script>
     <script src="{{ asset('assets/libs/@preline/overlay/index.js') }} "></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }} "></script>
+
+    <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 </body>
 
 </html>

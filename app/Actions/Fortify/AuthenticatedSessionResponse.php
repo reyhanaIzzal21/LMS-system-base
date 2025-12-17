@@ -15,6 +15,8 @@ class AuthenticatedSessionResponse implements LoginResponse
             return redirect()->intended('admin/dashboard');
         } elseif ($user->hasRole('teacher')) {
             return redirect()->intended('teacher/dashboard');
+        } elseif ($user->hasRole('student')) {
+            return redirect()->intended('student/dashboard');
         }
 
         return redirect()->intended(route('dashboard', absolute: false));

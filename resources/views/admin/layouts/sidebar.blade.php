@@ -28,10 +28,14 @@
                         </a>
                     </li>
 
+                    <li class="text-xs font-bold pb-4 mt-8">
+                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                        <span>MAIN</span>
+                    </li>
+
                     <li class="hs-accordion sidebar-item" id="blog-accordion">
                         <a href="#frnt" class="hs-accordion-toggle sidebar-link dropdown-menu-link  ">
-                            <i class="ti ti-app-window text-xl flex-shrink-0"></i> <span class="hide-menu">Frontend
-                                Pages</span>
+                            <i class="ti ti-app-window text-xl flex-shrink-0"></i> <span class="hide-menu">Courses</span>
                             <span class="hide-menu ms-auto">
                                 <i class="ti ti-chevron-down text-lg ms-auto  hs-accordion-active:hidden "></i>
                                 <i
@@ -42,25 +46,21 @@
                         <div id="blog-accordion" class="hs-accordion-content ">
                             <ul class>
                                 <li class="pl-4 pr-3">
-                                    <a class="dropdown-submenu-link flex items-center justify-between" target="_blank"
-                                        href="https://bootstrapdemos.adminmart.com/modernize-tailwind-pro/dist/main/frontend-homepage.html">
+                                    <a class="dropdown-submenu-link flex items-center justify-between"
+                                        href="#">
                                         <span class="flex gap-2 items-center ">
                                             <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
-                                            <span class="hide-menu">Homepage</span>
+                                            <span class="hide-menu">Cagegory</span>
                                         </span>
-                                        <span
-                                            class="items-center gap-x-1.5 py-1 leading-3 px-2 rounded-md text-[10px] font-medium bg-secondary/30 text-secondary justify-end">Pro</span>
                                     </a>
                                 </li>
                                 <li class="pl-4 pr-3">
-                                    <a class="dropdown-submenu-link flex items-center justify-between" target="_blank"
-                                        href="https://bootstrapdemos.adminmart.com/modernize-tailwind-pro/dist/main/frontend-aboutpage.html">
+                                    <a class="dropdown-submenu-link flex items-center justify-between"
+                                        href="#">
                                         <span class="flex gap-2 items-center ">
                                             <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
-                                            <span class="hide-menu">About Us</span>
+                                            <span class="hide-menu">Course</span>
                                         </span>
-                                        <span
-                                            class="items-center gap-x-1.5 py-1 leading-3 px-2 rounded-md text-[10px] font-medium bg-secondary/30 text-secondary justify-end">Pro</span>
                                     </a>
                                 </li>
                             </ul>

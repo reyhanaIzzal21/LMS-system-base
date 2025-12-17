@@ -24,6 +24,11 @@ Route::middleware(['auth'])->group(function () {
         Route::view('dashboard', 'teacher.dashboard')->name('teacher.dashboard');
     });
 
+    // Route Prefix student
+    Route::prefix('student')->middleware('role:student')->group(function () {
+        Route::view('dashboard', 'student.dashboard')->name('student.dashboard');
+    });
+
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('profile.edit');

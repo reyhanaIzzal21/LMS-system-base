@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Course\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,18 +16,20 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     // Route Prefix admin
     Route::prefix('admin')->middleware('role:admin')->group(function () {
-        Route::view('dashboard', 'admin.dashboard')->name('admin.dashboard');
-        // Tambah route admin lainnya di sini
+        Route::view('dashboard', 'admin.pages.dashboard')->name('admin.dashboard');
+
+        // Category
+        Route::resource('categories', CategoryController::class);
     });
 
     // Route Prefix teacher
     Route::prefix('teacher')->middleware('role:teacher')->group(function () {
-        Route::view('dashboard', 'teacher.dashboard')->name('teacher.dashboard');
+        Route::view('dashboard', 'teacher.pages.dashboard')->name('teacher.dashboard');
     });
 
     // Route Prefix student
     Route::prefix('student')->middleware('role:student')->group(function () {
-        Route::view('dashboard', 'student.dashboard')->name('student.dashboard');
+        Route::view('dashboard', 'student.pages.dashboard')->name('student.dashboard');
     });
 
     Route::redirect('settings', 'settings/profile');

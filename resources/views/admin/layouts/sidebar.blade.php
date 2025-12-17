@@ -47,10 +47,10 @@
                             <ul class>
                                 <li class="pl-4 pr-3">
                                     <a class="dropdown-submenu-link flex items-center justify-between"
-                                        href="#">
+                                        href="{{ route('categories.index') }}">
                                         <span class="flex gap-2 items-center ">
                                             <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
-                                            <span class="hide-menu">Cagegory</span>
+                                            <span class="hide-menu">Category</span>
                                         </span>
                                     </a>
                                 </li>

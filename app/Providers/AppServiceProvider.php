@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\Interfaces\CourseInterface;
 use App\Contracts\Interfaces\CategoryInterface;
+use App\Contracts\Repositories\CourseRepository;
 use App\Contracts\Repositories\CategoryRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
+        $this->app->bind(CourseInterface::class, CourseRepository::class);
     }
 
     /**

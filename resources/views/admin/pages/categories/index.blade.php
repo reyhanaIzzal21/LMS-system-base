@@ -79,7 +79,10 @@
                                         Edit
                                     </button>
 
-                                    <button onclick="openModal('deleteCategoryModal{{ $category->id }}')"
+                                    <button type="button"
+                                        onclick="openDeleteModal(
+                                    '{{ route('categories.destroy', $category->id) }}',
+                                    'Apakah anda yakin ingin menghapus <strong>{{ $category->name }}</strong>? Tindakan ini tidak dapat dibatalkan.')"
                                         class="inline-flex items-center gap-1 px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition border border-red-100 text-sm font-medium">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -144,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <div id="deleteCategoryModal{{ $category->id }}"
+                            {{-- <div id="deleteCategoryModal{{ $category->id }}"
                                 class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden">
                                 <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
                                     <div
@@ -180,7 +183,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         @empty
                             <tr>
                                 <td colspan="3" class="py-12 text-center">

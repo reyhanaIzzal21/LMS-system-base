@@ -3,6 +3,7 @@
 use Livewire\Volt\Volt;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Course\CourseController;
 use App\Http\Controllers\Course\CategoryController;
 
 Route::get('/', function () {
@@ -18,8 +19,11 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::view('dashboard', 'admin.pages.dashboard')->name('admin.dashboard');
 
-        // Category
+        // Courses Management
         Route::resource('categories', CategoryController::class);
+        Route::resource('courses', CourseController::class);
+        Route::get('courses/{slug}/show', [CourseController::class, 'show'])->name('courses.show');
+        Route::patch('/courses/{course}/ready', [CourseController::class, 'setReadyStatus'])->name('courses.set-ready');
     });
 
     // Route Prefix teacher

@@ -37,6 +37,9 @@
                 <!-- CONTENT (SCROLL DI SINI) -->
                 <main class="flex-1 overflow-y-auto px-4 pb-4">
                     @yield('content')
+
+                    {{-- global delete modal --}}
+                    @include('components.delete-modal-component')
                 </main>
             </div>
         </div>

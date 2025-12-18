@@ -4,6 +4,7 @@ use Livewire\Volt\Volt;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Course\CourseController;
+use App\Http\Controllers\Course\ModuleController;
 use App\Http\Controllers\Course\CategoryController;
 
 Route::get('/', function () {
@@ -24,6 +25,17 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('courses', CourseController::class);
         Route::get('courses/{slug}/show', [CourseController::class, 'show'])->name('courses.show');
         Route::patch('/courses/{course}/ready', [CourseController::class, 'setReadyStatus'])->name('courses.set-ready');
+
+        // mocule course
+        Route::prefix('courses/{course}')->group(function () {
+            Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
+            Route::post('/modules', [ModuleController::class, 'store'])->name('modules.store');
+        });
+        // Route::get('/modules/{module}/show', [ModuleController::class, 'show'])->name('modules.show');
+        Route::put('/modules/{module}', [ModuleController::class, 'update'])->name('modules.update');
+        Route::delete('/modules/{module}', [ModuleController::class, 'destroy'])->name('modules.destroy');
+        Route::patch('/modules/{module}/move-up', [ModuleController::class, 'moveUp'])->name('modules.move-up');
+        Route::patch('/modules/{module}/move-down', [ModuleController::class, 'moveDown'])->name('modules.move-down');
     });
 
     // Route Prefix teacher

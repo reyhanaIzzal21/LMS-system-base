@@ -38,8 +38,9 @@
                 <main class="flex-1 overflow-y-auto px-4 pb-4">
                     @yield('content')
 
-                    {{-- global delete modal --}}
+                    {{-- global components modal --}}
                     @include('components.delete-modal-component')
+                    @include('components.confirm-modal-component')
                 </main>
             </div>
         </div>

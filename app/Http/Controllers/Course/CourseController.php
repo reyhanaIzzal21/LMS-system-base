@@ -81,7 +81,12 @@ class CourseController extends Controller
     {
         $course = $this->courseService->findCourseBySlug($slug);
         abort_unless($course, 404);
-        return view('admin.pages.courses.show', compact('course'));
+        
+        // Added these lines
+        $modules = $course->modules;
+        $courseId = $course->id;
+        
+        return view('admin.pages.courses.show', compact('course', 'modules', 'courseId'));
     }
 
     public function setReadyStatus(Request $request, string $course): RedirectResponse

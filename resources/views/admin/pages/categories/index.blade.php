@@ -95,7 +95,7 @@
                             </tr>
 
                             <div id="editCategoryModal{{ $category->id }}"
-                                class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden transition-opacity">
+                                class="fixed inset-0 z-1000 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden transition-opacity">
                                 <div
                                     class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform transition-all scale-100">
                                     <div class="flex justify-between items-center mb-5">
@@ -206,7 +206,7 @@
     </div>
 
     <div id="createCategoryModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden">
+        class="fixed inset-0 z-1000 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform transition-all scale-100">
             <div class="flex justify-between items-center mb-5">
                 <h3 class="text-xl font-bold text-slate-800">Create New Category</h3>

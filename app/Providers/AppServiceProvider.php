@@ -7,6 +7,8 @@ use App\Contracts\Interfaces\CourseInterface;
 use App\Contracts\Interfaces\CategoryInterface;
 use App\Contracts\Repositories\CourseRepository;
 use App\Contracts\Repositories\CategoryRepository;
+use App\Contracts\Interfaces\ModuleInterface;
+use App\Contracts\Repositories\ModuleRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
         $this->app->bind(CourseInterface::class, CourseRepository::class);
+        $this->app->bind(ModuleInterface::class, ModuleRepository::class);
     }
 
     /**

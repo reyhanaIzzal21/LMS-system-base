@@ -70,7 +70,7 @@
 
 <div>
     <label class="font-semibold">Photo</label>
-    <input type="file" name="photo" class="w-full">
+    <input type="file" name="photo" class="w-full" accept="image/*">
 
 
     @if (isset($course) && $course->photo)

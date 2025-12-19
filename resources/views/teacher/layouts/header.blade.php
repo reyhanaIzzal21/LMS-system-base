@@ -74,8 +74,7 @@
         <div class="flex items-center gap-4">
             <div class="text-end">
                 <span class="fw-bold fs-3 text-capitalize">{{ Auth::user()->name }}</span><br>
-                <span
-                    class="mt-1 badge fs-2 bg-light-primary p-1 text-primary">{{ Auth::user()->roles->first()->name }}</span>
+                <span class="mt-1 badge fs-2 bg-light-primary p-1 text-primary">{{ Auth::user()->roles->first()->name }}</span>
             </div>
 
             <div class="m-1 hs-dropdown [--trigger:hover] relative inline-flex">
@@ -101,7 +100,8 @@
                         <div class="px-4 mt-[7px] grid">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn-outline-primary w-full hover:bg-blue-700/80 hover:text-white">Logout</button>
+                                <button type="submit"
+                                    class="btn-outline-primary w-full hover:bg-blue-700/80 hover:text-white">Logout</button>
                             </form>
                         </div>
                     </div>

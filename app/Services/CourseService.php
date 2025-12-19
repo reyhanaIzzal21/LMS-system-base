@@ -23,6 +23,11 @@ class CourseService
         return $this->courseRepository->getAllCourses();
     }
 
+    public function getCoursesByTeacher(string $teacherId)
+    {
+        return $this->courseRepository->getCoursesByTeacher($teacherId);
+    }
+
     public function getCourseById(string $courseId): Course
     {
         return $this->courseRepository->getCourseById($courseId);

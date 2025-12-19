@@ -13,6 +13,14 @@ class CourseRepository implements CourseInterface
         return Course::with(['category', 'user'])->orderBy('created_at', 'desc')->get();
     }
 
+    public function getCoursesByTeacher(string $teacherId): Collection
+    {
+        return Course::with(['category', 'user'])
+            ->where('user_id', $teacherId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
     public function getCourseById(string $courseId): Course
     {
         return Course::findOrFail($courseId);

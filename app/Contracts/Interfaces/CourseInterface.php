@@ -9,6 +9,8 @@ interface CourseInterface
 {
     public function getAllCourses(): Collection;
 
+    public function getCoursesByTeacher(string $teacherId): Collection;
+
     public function getCourseById(string $courseId): Course;
 
     public function findCourseBySlug(string $slug): ?Course;

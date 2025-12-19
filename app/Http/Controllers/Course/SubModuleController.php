@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
 use App\Services\SubModuleService;
+use App\Services\ModuleService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -11,10 +12,22 @@ use Illuminate\View\View;
 class SubModuleController extends Controller
 {
     protected SubModuleService $subModuleService;
+    protected ModuleService $moduleService;
 
-    public function __construct(SubModuleService $subModuleService)
+    public function __construct(SubModuleService $subModuleService, ModuleService $moduleService)
     {
         $this->subModuleService = $subModuleService;
+        $this->moduleService = $moduleService;
+    }
+
+    /**
+     * Show the form for creating a new sub module.
+     */
+    public function create(string $module): View
+    {
+        $module = $this->moduleService->findById($module);
+
+        return view('admin.pages.sub-module.create', compact('module'));
     }
 
     /**
@@ -35,7 +48,7 @@ class SubModuleController extends Controller
             'content' => $request->content,
         ]);
 
-        return redirect()->back()->with('success', 'Materi berhasil ditambahkan.');
+        return redirect()->route('modules.show', $module)->with('success', 'Materi berhasil ditambahkan.');
     }
 
     /**
@@ -45,7 +58,17 @@ class SubModuleController extends Controller
     {
         $subModule = $this->subModuleService->findById($subModule);
 
-        return view('admin.pages.courses.panes.modules.panes.sub-module-detail', compact('subModule'));
+        return view('admin.pages.sub-module.sub-module-detail', compact('subModule'));
+    }
+
+    /**
+     * Show the form for editing the specified sub module.
+     */
+    public function edit(string $subModule): View
+    {
+        $subModule = $this->subModuleService->findById($subModule);
+
+        return view('admin.pages.sub-module.edit', compact('subModule'));
     }
 
     /**
@@ -59,13 +82,16 @@ class SubModuleController extends Controller
             'content' => 'required|string',
         ]);
 
+        $subModuleModel = $this->subModuleService->findById($subModule);
+        $moduleId = $subModuleModel->module_id;
+
         $this->subModuleService->updateSubModule($subModule, [
             'title' => $request->title,
             'sub_title' => $request->sub_title,
             'content' => $request->content,
         ]);
 
-        return redirect()->back()->with('success', 'Materi berhasil diperbarui.');
+        return redirect()->route('modules.show', $moduleId)->with('success', 'Materi berhasil diperbarui.');
     }
 
     /**

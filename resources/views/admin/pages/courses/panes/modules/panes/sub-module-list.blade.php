@@ -1,5 +1,4 @@
-<div x-show="activeTab === 'materi'" x-cloak x-data="subModuleCrud()"
-    @open-create-submodule-modal.window="openCreateModal()" class="divide-y divide-slate-100">
+<div x-show="activeTab === 'materi'" x-cloak class="divide-y divide-slate-100">
 
     @if (session('success'))
         <div class="m-4 p-3 bg-green-100 text-green-700 rounded-lg">{{ session('success') }}</div>
@@ -49,12 +48,12 @@
                         <i class="ti ti-eye text-lg"></i>
                     </a>
 
-                    {{-- Edit --}}
-                    <button @click="openEditModal(@js($subModule))"
+                    {{-- Edit - Link to Edit Page --}}
+                    <a href="{{ route('sub-modules.edit', $subModule->id) }}"
                         class="p-2 text-amber-500 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition"
                         title="Edit">
                         <i class="ti ti-edit text-lg"></i>
-                    </button>
+                    </a>
 
                     {{-- Delete --}}
                     <form action="{{ route('sub-modules.destroy', $subModule->id) }}" method="POST"
@@ -77,62 +76,10 @@
             </div>
             <h4 class="text-lg font-semibold text-slate-700 mb-1">Belum ada materi</h4>
             <p class="text-slate-500 text-sm mb-4">Tambahkan materi pertama untuk modul ini.</p>
-            <button @click="openCreateModal()"
-                class="px-4 py-2 bg-[#5d87ff] text-white rounded-lg hover:bg-[#4a70e0] transition text-sm font-medium">
+            <a href="{{ route('sub-modules.create', $module->id) }}"
+                class="inline-block px-4 py-2 bg-[#5d87ff] text-white rounded-lg hover:bg-[#4a70e0] transition text-sm font-medium">
                 + Tambah Materi
-            </button>
+            </a>
         </div>
     @endif
-
-    {{-- Modal Create/Edit SubModule --}}
-    <div x-show="isModalOpen" x-transition class="fixed inset-0 bg-black/50 flex items-center justify-center z-1000"
-        style="display: none;">
-        <div @click.away="closeModal()" class="bg-white rounded-2xl w-full max-w-3xl p-6 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-slate-800" x-text="modalTitle"></h3>
-                <button @click="closeModal()" class="text-slate-400 hover:text-slate-600">
-                    <i class="ti ti-x text-xl"></i>
-                </button>
-            </div>
-
-            <form :action="formAction" method="POST" class="space-y-4" @submit="syncContent()">
-                @csrf
-                <template x-if="isEdit">
-                    <input type="hidden" name="_method" value="PUT">
-                </template>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Title</label>
-                    <input type="text" name="title" x-model="form.title"
-                        class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        required>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Sub Title</label>
-                    <input type="text" name="sub_title" x-model="form.sub_title"
-                        class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        required>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Content</label>
-                    <textarea id="summernote-editor" name="content" class="w-full"></textarea>
-                </div>
-
-                <div class="flex justify-end gap-3 pt-4 border-t">
-                    <button type="button" @click="closeModal()"
-                        class="px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 transition">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="px-6 py-2 bg-[#5d87ff] text-white rounded-lg hover:bg-[#4a70e0] transition font-medium">
-                        Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
-
-@include('admin.pages.courses.panes.modules.scripts.sub-module-scripts')

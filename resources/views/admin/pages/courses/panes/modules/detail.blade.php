@@ -98,14 +98,14 @@
                 </button>
 
                 <div x-show="activeTab === 'materi'" x-cloak class="flex gap-2">
-                    <button @click="$dispatch('open-create-submodule-modal')"
+                    <a href="{{ route('sub-modules.create', $module->id) }}"
                         class="px-5 py-2.5 bg-[#5d87ff] hover:bg-[#4a70e0] text-white rounded-lg shadow-lg shadow-blue-500/30 transition text-sm font-medium flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Tambah Materi
-                    </button>
+                    </a>
                 </div>
 
                 <div x-show="activeTab === 'tugas'" x-cloak class="flex gap-2">

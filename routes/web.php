@@ -40,9 +40,11 @@ Route::middleware(['auth'])->group(function () {
 
         // SubModule
         Route::prefix('modules/{module}')->group(function () {
+            Route::get('/sub-modules/create', [SubModuleController::class, 'create'])->name('sub-modules.create');
             Route::post('/sub-modules', [SubModuleController::class, 'store'])->name('sub-modules.store');
         });
         Route::get('/sub-modules/{subModule}/show', [SubModuleController::class, 'show'])->name('sub-modules.show');
+        Route::get('/sub-modules/{subModule}/edit', [SubModuleController::class, 'edit'])->name('sub-modules.edit');
         Route::put('/sub-modules/{subModule}', [SubModuleController::class, 'update'])->name('sub-modules.update');
         Route::delete('/sub-modules/{subModule}', [SubModuleController::class, 'destroy'])->name('sub-modules.destroy');
         Route::patch('/sub-modules/{subModule}/move-up', [SubModuleController::class, 'moveUp'])->name('sub-modules.move-up');

@@ -59,6 +59,14 @@ class ModuleController extends Controller
         return redirect()->back()->with('success', 'Module deleted successfully.');
     }
 
+    // show module
+    public function show(string $module): View
+    {
+        $module = $this->moduleService->findById($module);
+
+        return view('admin.pages.courses.panes.modules.detail', compact('module'));
+    }
+
     public function moveUp(string $module): RedirectResponse
     {
         $this->moduleService->moveStepUp($module);

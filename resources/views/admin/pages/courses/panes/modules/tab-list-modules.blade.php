@@ -37,7 +37,7 @@
                             <button type="submit"><i class="ti ti-arrow-down"></i></button>
                         </form>
                         {{-- show module --}}
-                        <a href="#" class="text-blue-600 text-sm">Show</a>
+                        <a href="{{ route('modules.show', $module->id) }}" class="text-blue-600 text-sm">Show</a>
                         <button @click="openEditModal(@js($module))"
                             class="text-blue-600 text-sm">Edit</button>
                         <form action="{{ route('modules.destroy', $module->id) }}" method="POST"

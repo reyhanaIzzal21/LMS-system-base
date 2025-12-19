@@ -56,6 +56,11 @@ class ModuleService
         });
     }
 
+    public function findById(string $id): Module
+    {
+        return $this->moduleRepository->findById($id);
+    }
+
     public function moveStepUp(string $moduleId): void
     {
         DB::transaction(function () use ($moduleId) {

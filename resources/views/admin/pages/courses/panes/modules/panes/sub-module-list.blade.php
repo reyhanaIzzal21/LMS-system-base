@@ -1,48 +1,138 @@
-<div x-show="activeTab === 'materi'" x-transition.opacity class="divide-y divide-slate-100">
-    <div class="p-5 flex items-center justify-between hover:bg-slate-50 transition group">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#5d87ff]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <div>
-                <h4 class="font-bold text-slate-800 group-hover:text-[#5d87ff] transition">Apa itu Blockchain?
-                </h4>
-                <p class="text-xs text-slate-500">Video • 10 Menit</p>
-            </div>
-        </div>
-        <button class="text-slate-400 hover:text-slate-600 px-3"><svg class="w-5 h-5" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                </path>
-            </svg></button>
-    </div>
+<div x-show="activeTab === 'materi'" x-cloak x-data="subModuleCrud()"
+    @open-create-submodule-modal.window="openCreateModal()" class="divide-y divide-slate-100">
 
-    <div class="p-5 flex items-center justify-between hover:bg-slate-50 transition group">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+    @if (session('success'))
+        <div class="m-4 p-3 bg-green-100 text-green-700 rounded-lg">{{ session('success') }}</div>
+    @endif
+
+    @if ($module->subModules->count())
+        @foreach ($module->subModules as $subModule)
+            <div class="p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#5d87ff] font-bold text-sm">
+                        {{ $subModule->step }}
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 group-hover:text-[#5d87ff] transition">
+                            {{ $subModule->title }}</h4>
+                        <p class="text-xs text-slate-500">{{ $subModule->sub_title }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    {{-- Move Up --}}
+                    <form method="POST" action="{{ route('sub-modules.move-up', $subModule->id) }}">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit"
+                            class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                            title="Move Up">
+                            <i class="ti ti-arrow-up text-lg"></i>
+                        </button>
+                    </form>
+
+                    {{-- Move Down --}}
+                    <form method="POST" action="{{ route('sub-modules.move-down', $subModule->id) }}">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit"
+                            class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition"
+                            title="Move Down">
+                            <i class="ti ti-arrow-down text-lg"></i>
+                        </button>
+                    </form>
+
+                    {{-- Show --}}
+                    <a href="{{ route('sub-modules.show', $subModule->id) }}"
+                        class="p-2 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition"
+                        title="Lihat">
+                        <i class="ti ti-eye text-lg"></i>
+                    </a>
+
+                    {{-- Edit --}}
+                    <button @click="openEditModal(@js($subModule))"
+                        class="p-2 text-amber-500 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition"
+                        title="Edit">
+                        <i class="ti ti-edit text-lg"></i>
+                    </button>
+
+                    {{-- Delete --}}
+                    <form action="{{ route('sub-modules.destroy', $subModule->id) }}" method="POST"
+                        onsubmit="return confirm('Hapus materi ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition"
+                            title="Hapus">
+                            <i class="ti ti-trash text-lg"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div>
-                <h4 class="font-bold text-slate-800 group-hover:text-[#5d87ff] transition">Sejarah Bitcoin</h4>
-                <p class="text-xs text-slate-500">Artikel PDF • 5 Halaman</p>
+        @endforeach
+    @else
+        <div class="p-12 text-center">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="ti ti-file-text text-3xl text-slate-400"></i>
             </div>
+            <h4 class="text-lg font-semibold text-slate-700 mb-1">Belum ada materi</h4>
+            <p class="text-slate-500 text-sm mb-4">Tambahkan materi pertama untuk modul ini.</p>
+            <button @click="openCreateModal()"
+                class="px-4 py-2 bg-[#5d87ff] text-white rounded-lg hover:bg-[#4a70e0] transition text-sm font-medium">
+                + Tambah Materi
+            </button>
         </div>
-        <button class="text-slate-400 hover:text-slate-600 px-3"><svg class="w-5 h-5" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
-                </path>
-            </svg></button>
+    @endif
+
+    {{-- Modal Create/Edit SubModule --}}
+    <div x-show="isModalOpen" x-transition class="fixed inset-0 bg-black/50 flex items-center justify-center z-1000"
+        style="display: none;">
+        <div @click.away="closeModal()" class="bg-white rounded-2xl w-full max-w-3xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-slate-800" x-text="modalTitle"></h3>
+                <button @click="closeModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="ti ti-x text-xl"></i>
+                </button>
+            </div>
+
+            <form :action="formAction" method="POST" class="space-y-4" @submit="syncContent()">
+                @csrf
+                <template x-if="isEdit">
+                    <input type="hidden" name="_method" value="PUT">
+                </template>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Title</label>
+                    <input type="text" name="title" x-model="form.title"
+                        class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Sub Title</label>
+                    <input type="text" name="sub_title" x-model="form.sub_title"
+                        class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Content</label>
+                    <textarea id="summernote-editor" name="content" class="w-full"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t">
+                    <button type="button" @click="closeModal()"
+                        class="px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 transition">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-2 bg-[#5d87ff] text-white rounded-lg hover:bg-[#4a70e0] transition font-medium">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+@include('admin.pages.courses.panes.modules.scripts.sub-module-scripts')

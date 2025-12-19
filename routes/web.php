@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Course\CourseController;
 use App\Http\Controllers\Course\ModuleController;
 use App\Http\Controllers\Course\CategoryController;
+use App\Http\Controllers\Course\SubModuleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('courses/{slug}/show', [CourseController::class, 'show'])->name('courses.show');
         Route::patch('/courses/{course}/ready', [CourseController::class, 'setReadyStatus'])->name('courses.set-ready');
 
-        // mocule course
+        // Module course
         Route::prefix('courses/{course}')->group(function () {
             Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
             Route::post('/modules', [ModuleController::class, 'store'])->name('modules.store');
@@ -36,6 +37,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/modules/{module}', [ModuleController::class, 'destroy'])->name('modules.destroy');
         Route::patch('/modules/{module}/move-up', [ModuleController::class, 'moveUp'])->name('modules.move-up');
         Route::patch('/modules/{module}/move-down', [ModuleController::class, 'moveDown'])->name('modules.move-down');
+
+        // SubModule
+        Route::prefix('modules/{module}')->group(function () {
+            Route::post('/sub-modules', [SubModuleController::class, 'store'])->name('sub-modules.store');
+        });
+        Route::get('/sub-modules/{subModule}/show', [SubModuleController::class, 'show'])->name('sub-modules.show');
+        Route::put('/sub-modules/{subModule}', [SubModuleController::class, 'update'])->name('sub-modules.update');
+        Route::delete('/sub-modules/{subModule}', [SubModuleController::class, 'destroy'])->name('sub-modules.destroy');
+        Route::patch('/sub-modules/{subModule}/move-up', [SubModuleController::class, 'moveUp'])->name('sub-modules.move-up');
+        Route::patch('/sub-modules/{subModule}/move-down', [SubModuleController::class, 'moveDown'])->name('sub-modules.move-down');
     });
 
     // Route Prefix teacher

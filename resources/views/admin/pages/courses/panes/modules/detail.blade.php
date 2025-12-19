@@ -2,9 +2,20 @@
 
 @section('style')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- Summernote CSS --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
         [x-cloak] {
             display: none !important;
+        }
+
+        .note-editor {
+            border-radius: 0.5rem;
+        }
+
+        .note-editor .note-toolbar {
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
         }
     </style>
 @endsection
@@ -40,15 +51,15 @@
 
                 <div class="flex gap-4">
                     <div class="text-center px-4 py-2 bg-slate-50 rounded-lg border border-slate-100">
-                        <span class="block text-2xl font-bold text-slate-800">4</span>
+                        <span class="block text-2xl font-bold text-slate-800">{{ $module->subModules->count() }}</span>
                         <span class="text-xs text-slate-500 uppercase font-semibold">Materi</span>
                     </div>
                     <div class="text-center px-4 py-2 bg-slate-50 rounded-lg border border-slate-100">
-                        <span class="block text-2xl font-bold text-slate-800">2</span>
+                        <span class="block text-2xl font-bold text-slate-800">0</span>
                         <span class="text-xs text-slate-500 uppercase font-semibold">Tugas</span>
                     </div>
                     <div class="text-center px-4 py-2 bg-slate-50 rounded-lg border border-slate-100">
-                        <span class="block text-2xl font-bold text-slate-800">1</span>
+                        <span class="block text-2xl font-bold text-slate-800">0</span>
                         <span class="text-xs text-slate-500 uppercase font-semibold">Quiz</span>
                     </div>
                 </div>
@@ -87,7 +98,7 @@
                 </button>
 
                 <div x-show="activeTab === 'materi'" x-cloak class="flex gap-2">
-                    <button
+                    <button @click="$dispatch('open-create-submodule-modal')"
                         class="px-5 py-2.5 bg-[#5d87ff] hover:bg-[#4a70e0] text-white rounded-lg shadow-lg shadow-blue-500/30 transition text-sm font-medium flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -139,10 +150,15 @@
             @include('admin.pages.courses.panes.modules.panes.quiz-module-list')
             @include('admin.pages.courses.panes.modules.panes.task-module-list')
 
-            
 
-            
+
+
 
         </div>
     </div>
+@endsection
+
+@section('script')
+    {{-- Summernote JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 @endsection

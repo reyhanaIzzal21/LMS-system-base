@@ -17,14 +17,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
     <!-- Core Css -->
     <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+
     <title>Modernize TailwindCSS HTML Admin Template</title>
     @yield('style')
     @stack('style')
 </head>
-
 <body class="bg-info/5">
+
+    <!--start the project-->
     <main>
-        <!--start the project-->
         <div id="main-wrapper" class="flex h-screen">
             @include('admin.layouts.sidebar')
 
@@ -52,10 +54,9 @@
     <!--end of project-->
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
 
-    @yield('script')
-    @stack('script')
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }} "></script>
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.min.js') }} "></script>
     <script src="{{ asset('assets/libs/iconify-icon/dist/iconify-icon.min.js') }} "></script>
     <script src="{{ asset('assets/libs/preline/dist/preline.js') }} "></script>
@@ -65,6 +66,9 @@
 
     <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+
+    @yield('script')
+    @stack('script')
 </body>
 
 </html>

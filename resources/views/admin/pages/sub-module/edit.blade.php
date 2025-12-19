@@ -1,8 +1,6 @@
 @extends('admin.layouts.app')
 
 @section('style')
-    {{-- Summernote CSS --}}
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
         .note-editor {
             border-radius: 0.5rem;
@@ -111,14 +109,12 @@
 @endsection
 
 @section('script')
-    {{-- Summernote JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#summernote-editor').summernote({
                 placeholder: 'Tulis konten materi di sini...',
                 tabsize: 2,
-                height: 400,
+                height: 500,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],

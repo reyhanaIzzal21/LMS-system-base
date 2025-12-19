@@ -5,6 +5,20 @@
         [x-cloak] {
             display: none !important;
         }
+
+        /* Style untuk konten Summernote */
+        .summernote-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .summernote-content iframe {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
     </style>
 @endsection
 
@@ -48,7 +62,7 @@
         {{-- Content --}}
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
             <h2 class="text-lg font-bold text-slate-800 mb-4 pb-4 border-b">Konten Materi</h2>
-            <div class="prose prose-slate max-w-none">
+            <div class="prose prose-slate max-w-none summernote-content">
                 {!! $subModule->content !!}
             </div>
         </div>

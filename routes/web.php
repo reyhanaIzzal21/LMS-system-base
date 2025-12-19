@@ -7,6 +7,9 @@ use App\Http\Controllers\Course\CourseController;
 use App\Http\Controllers\Course\ModuleController;
 use App\Http\Controllers\Course\CategoryController;
 use App\Http\Controllers\Course\SubModuleController;
+use App\Http\Controllers\Teacher\TeacherCourseController;
+use App\Http\Controllers\Teacher\TeacherModuleController;
+use App\Http\Controllers\Teacher\TeacherSubModuleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::view('dashboard', 'admin.pages.dashboard')->name('admin.dashboard');
 
-        // Category course 
+        // Category course
         Route::resource('categories', CategoryController::class);
         // Courses Management
         Route::resource('courses', CourseController::class);
@@ -57,30 +60,30 @@ Route::middleware(['auth'])->group(function () {
         Route::view('dashboard', 'teacher.pages.dashboard')->name('dashboard');
 
         // Course (view only)
-        Route::get('/courses', [\App\Http\Controllers\Teacher\TeacherCourseController::class, 'index'])->name('courses.index');
-        Route::get('/courses/{slug}/show', [\App\Http\Controllers\Teacher\TeacherCourseController::class, 'show'])->name('courses.show');
+        Route::get('/courses', [TeacherCourseController::class, 'index'])->name('courses.index');
+        Route::get('/courses/{slug}/show', [TeacherCourseController::class, 'show'])->name('courses.show');
 
         // Module management
         Route::prefix('courses/{course}')->group(function () {
-            Route::post('/modules', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'store'])->name('modules.store');
+            Route::post('/modules', [TeacherModuleController::class, 'store'])->name('modules.store');
         });
-        Route::get('/modules/{module}/show', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'show'])->name('modules.show');
-        Route::put('/modules/{module}', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'update'])->name('modules.update');
-        Route::delete('/modules/{module}', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'destroy'])->name('modules.destroy');
-        Route::patch('/modules/{module}/move-up', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'moveUp'])->name('modules.move-up');
-        Route::patch('/modules/{module}/move-down', [\App\Http\Controllers\Teacher\TeacherModuleController::class, 'moveDown'])->name('modules.move-down');
+        Route::get('/modules/{module}/show', [TeacherModuleController::class, 'show'])->name('modules.show');
+        Route::put('/modules/{module}', [TeacherModuleController::class, 'update'])->name('modules.update');
+        Route::delete('/modules/{module}', [TeacherModuleController::class, 'destroy'])->name('modules.destroy');
+        Route::patch('/modules/{module}/move-up', [TeacherModuleController::class, 'moveUp'])->name('modules.move-up');
+        Route::patch('/modules/{module}/move-down', [TeacherModuleController::class, 'moveDown'])->name('modules.move-down');
 
         // SubModule management
         Route::prefix('modules/{module}')->group(function () {
-            Route::get('/sub-modules/create', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'create'])->name('sub-modules.create');
-            Route::post('/sub-modules', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'store'])->name('sub-modules.store');
+            Route::get('/sub-modules/create', [TeacherSubModuleController::class, 'create'])->name('sub-modules.create');
+            Route::post('/sub-modules', [TeacherSubModuleController::class, 'store'])->name('sub-modules.store');
         });
-        Route::get('/sub-modules/{subModule}/show', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'show'])->name('sub-modules.show');
-        Route::get('/sub-modules/{subModule}/edit', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'edit'])->name('sub-modules.edit');
-        Route::put('/sub-modules/{subModule}', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'update'])->name('sub-modules.update');
-        Route::delete('/sub-modules/{subModule}', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'destroy'])->name('sub-modules.destroy');
-        Route::patch('/sub-modules/{subModule}/move-up', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'moveUp'])->name('sub-modules.move-up');
-        Route::patch('/sub-modules/{subModule}/move-down', [\App\Http\Controllers\Teacher\TeacherSubModuleController::class, 'moveDown'])->name('sub-modules.move-down');
+        Route::get('/sub-modules/{subModule}/show', [TeacherSubModuleController::class, 'show'])->name('sub-modules.show');
+        Route::get('/sub-modules/{subModule}/edit', [TeacherSubModuleController::class, 'edit'])->name('sub-modules.edit');
+        Route::put('/sub-modules/{subModule}', [TeacherSubModuleController::class, 'update'])->name('sub-modules.update');
+        Route::delete('/sub-modules/{subModule}', [TeacherSubModuleController::class, 'destroy'])->name('sub-modules.destroy');
+        Route::patch('/sub-modules/{subModule}/move-up', [TeacherSubModuleController::class, 'moveUp'])->name('sub-modules.move-up');
+        Route::patch('/sub-modules/{subModule}/move-down', [TeacherSubModuleController::class, 'moveDown'])->name('sub-modules.move-down');
     });
 
     // Route Prefix student

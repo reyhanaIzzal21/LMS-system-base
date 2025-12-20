@@ -2,14 +2,15 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\Interfaces\CourseInterface;
-use App\Contracts\Interfaces\CategoryInterface;
-use App\Contracts\Repositories\CourseRepository;
-use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Interfaces\ModuleInterface;
-use App\Contracts\Repositories\ModuleRepository;
+use App\Contracts\Interfaces\CategoryInterface;
 use App\Contracts\Interfaces\SubModuleInterface;
+use App\Contracts\Repositories\CourseRepository;
+use App\Contracts\Repositories\ModuleRepository;
+use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Repositories\SubModuleRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (app()->environment('local')) {
+            URL::forceScheme('https');
+        }
     }
 }

@@ -10,14 +10,22 @@ use App\Http\Controllers\Course\SubModuleController;
 use App\Http\Controllers\Teacher\TeacherCourseController;
 use App\Http\Controllers\Teacher\TeacherModuleController;
 use App\Http\Controllers\Teacher\TeacherSubModuleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserCourseController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.pages.home');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// landing page
+Route::get('courses', [UserCourseController::class, 'courses'])->name('courses');
+Route::get('program', [HomeController::class, 'program'])->name('program');
+Route::get('event', [HomeController::class, 'event'])->name('event');
+Route::get('blog', [HomeController::class, 'blog'])->name('blog');
 
 Route::middleware(['auth'])->group(function () {
     // Route Prefix admin

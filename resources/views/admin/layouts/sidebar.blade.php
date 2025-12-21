@@ -35,7 +35,8 @@
 
                     <li class="hs-accordion sidebar-item" id="blog-accordion">
                         <a href="#frnt" class="hs-accordion-toggle sidebar-link dropdown-menu-link  ">
-                            <i class="ti ti-app-window text-xl flex-shrink-0"></i> <span class="hide-menu">Courses</span>
+                            <i class="ti ti-app-window text-xl flex-shrink-0"></i> <span
+                                class="hide-menu">Courses</span>
                             <span class="hide-menu ms-auto">
                                 <i class="ti ti-chevron-down text-lg ms-auto  hs-accordion-active:hidden "></i>
                                 <i
@@ -60,6 +61,40 @@
                                         <span class="flex gap-2 items-center ">
                                             <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
                                             <span class="hide-menu">Course</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="hs-accordion sidebar-item" id="programs-accordion">
+                        <a href="#programs" class="hs-accordion-toggle sidebar-link dropdown-menu-link  ">
+                            <i class="ti ti-book text-xl flex-shrink-0"></i> <span class="hide-menu">Programs</span>
+                            <span class="hide-menu ms-auto">
+                                <i class="ti ti-chevron-down text-lg ms-auto  hs-accordion-active:hidden "></i>
+                                <i
+                                    class="ti ti-chevron-up text-lg ms-auto hs-accordion-active:block ml-auto hidden z-10 relative"></i>
+                            </span>
+                        </a>
+
+                        <div id="programs-accordion" class="hs-accordion-content ">
+                            <ul class>
+                                <li class="pl-4 pr-3">
+                                    <a class="dropdown-submenu-link flex items-center justify-between"
+                                        href="{{ route('program-categories.index') }}">
+                                        <span class="flex gap-2 items-center ">
+                                            <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
+                                            <span class="hide-menu">Kategori Program</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="pl-4 pr-3">
+                                    <a class="dropdown-submenu-link flex items-center justify-between"
+                                        href="{{ route('programs.index') }}">
+                                        <span class="flex gap-2 items-center ">
+                                            <i class="ti ti-circle flex-shrink-0 text-xs me-3 "></i>
+                                            <span class="hide-menu">Program</span>
                                         </span>
                                     </a>
                                 </li>

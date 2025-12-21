@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class UserCourseController extends Controller
 {
-    public function courses(Request $request)
+    public function index(Request $request)
     {
         return view('user.pages.courses.index');
+    }
+
+    public function show(Request $request, $id)
+    {
+        return view('user.pages.courses.detail');
     }
 }

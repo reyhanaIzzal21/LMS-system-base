@@ -76,7 +76,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                <div
+                <a href="{{ route('courses.detail') }}"
                     class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop"
@@ -128,7 +128,8 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </a>
+
                 <div
                     class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                     <div class="relative h-48 overflow-hidden">
@@ -179,6 +180,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div
                     class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                     <div class="relative h-48 overflow-hidden">

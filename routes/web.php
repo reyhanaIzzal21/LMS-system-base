@@ -7,6 +7,8 @@ use App\Http\Controllers\Course\CourseController;
 use App\Http\Controllers\Course\ModuleController;
 use App\Http\Controllers\Course\CategoryController;
 use App\Http\Controllers\Course\SubModuleController;
+use App\Http\Controllers\Program\ProgramController;
+use App\Http\Controllers\Program\ProgramCategoryController;
 use App\Http\Controllers\Teacher\TeacherCourseController;
 use App\Http\Controllers\Teacher\TeacherModuleController;
 use App\Http\Controllers\Teacher\TeacherSubModuleController;
@@ -22,10 +24,15 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // landing page
-Route::get('courses', [UserCourseController::class, 'courses'])->name('courses');
+Route::get('courses', [UserCourseController::class, 'index'])->name('courses');
 Route::get('program', [HomeController::class, 'program'])->name('program');
 Route::get('event', [HomeController::class, 'event'])->name('event');
 Route::get('blog', [HomeController::class, 'blog'])->name('blog');
+Route::get('testimoni', [HomeController::class, 'testimoni'])->name('testimoni');
+
+Route::get('/courses/detail', function () {
+    return view('user.pages.courses.detail');
+})->name('courses.detail');
 
 Route::middleware(['auth'])->group(function () {
     // Route Prefix admin
@@ -61,6 +68,14 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/sub-modules/{subModule}', [SubModuleController::class, 'destroy'])->name('sub-modules.destroy');
         Route::patch('/sub-modules/{subModule}/move-up', [SubModuleController::class, 'moveUp'])->name('sub-modules.move-up');
         Route::patch('/sub-modules/{subModule}/move-down', [SubModuleController::class, 'moveDown'])->name('sub-modules.move-down');
+
+        // Program Categories
+        Route::resource('program-categories', ProgramCategoryController::class)->except(['show']);
+
+        // Programs Management
+        Route::resource('programs', ProgramController::class)->except(['show']);
+        Route::get('programs/{slug}/show', [ProgramController::class, 'show'])->name('programs.show');
+        Route::patch('/programs/{program}/toggle-active', [ProgramController::class, 'toggleActive'])->name('programs.toggle-active');
     });
 
     // Route Prefix teacher

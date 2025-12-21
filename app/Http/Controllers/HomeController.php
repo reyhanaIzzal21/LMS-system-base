@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('user.pages.blog.index');
     }
+
+    public function testimoni(Request $request)
+    {
+        return view('user.pages.testimoni.index');
+    }
 }

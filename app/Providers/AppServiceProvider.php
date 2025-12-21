@@ -7,11 +7,15 @@ use Illuminate\Support\ServiceProvider;
 use App\Contracts\Interfaces\CourseInterface;
 use App\Contracts\Interfaces\ModuleInterface;
 use App\Contracts\Interfaces\CategoryInterface;
+use App\Contracts\Interfaces\ProgramInterface;
 use App\Contracts\Interfaces\SubModuleInterface;
+use App\Contracts\Interfaces\ProgramCategoryInterface;
 use App\Contracts\Repositories\CourseRepository;
 use App\Contracts\Repositories\ModuleRepository;
+use App\Contracts\Repositories\ProgramRepository;
 use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Repositories\SubModuleRepository;
+use App\Contracts\Repositories\ProgramCategoryRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CourseInterface::class, CourseRepository::class);
         $this->app->bind(ModuleInterface::class, ModuleRepository::class);
         $this->app->bind(SubModuleInterface::class, SubModuleRepository::class);
+        $this->app->bind(ProgramCategoryInterface::class, ProgramCategoryRepository::class);
+        $this->app->bind(ProgramInterface::class, ProgramRepository::class);
     }
 
     /**

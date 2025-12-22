@@ -24,6 +24,11 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// dummy route untuk lihat slicing-an
+Route::get('/courses/dummy', function () {
+    return view('user.pages.courses.widgets.dummy');
+})->name('courses.dummy');
+
 // landing page
 Route::get('courses', [UserCourseController::class, 'index'])->name('courses');
 Route::get('courses/{slug}', [UserCourseController::class, 'show'])->name('courses.detail');

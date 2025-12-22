@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Course extends Model
 {
     use HasUuids, HasFactory;
@@ -26,6 +27,7 @@ class Course extends Model
         'category_id',
         'user_id',
         'title',
+        'sub_title',
         'photo',
         'slug',
         'description',

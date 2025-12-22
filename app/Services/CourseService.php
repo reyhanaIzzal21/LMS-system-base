@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Course;
+use App\Models\CourseBenefit;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -76,6 +77,22 @@ class CourseService
         }
     }
 
+    protected function syncBenefits(Course $course, array $benefits): void
+    {
+        // Delete existing benefits
+        $course->benefits()->delete();
+
+        // Create new benefits
+        foreach ($benefits as $benefitName) {
+            if (!empty(trim($benefitName))) {
+                CourseBenefit::create([
+                    'course_id' => $course->id,
+                    'name' => trim($benefitName),
+                ]);
+            }
+        }
+    }
+
     public function createCourse(array $courseData): Course
     {
         return DB::transaction(function () use ($courseData) {
@@ -108,7 +125,19 @@ class CourseService
             // set is_ready default to false if not set
             $courseData['is_ready'] = $courseData['is_ready'] ?? false;
 
-            return $this->courseRepository->createCourse($courseData);
+            // Extract benefits before creating course
+            $benefits = $courseData['benefits'] ?? [];
+            unset($courseData['benefits']);
+
+            // Create course
+            $course = $this->courseRepository->createCourse($courseData);
+
+            // Sync benefits
+            if (!empty($benefits)) {
+                $this->syncBenefits($course, $benefits);
+            }
+
+            return $course->load('benefits');
         });
     }
 
@@ -141,7 +170,17 @@ class CourseService
                 unset($courseData['photo_file']);
             }
 
-            return $this->courseRepository->updateCourse($courseId, $courseData);
+            // Extract benefits before updating course
+            $benefits = $courseData['benefits'] ?? [];
+            unset($courseData['benefits']);
+
+            // Update course
+            $updatedCourse = $this->courseRepository->updateCourse($courseId, $courseData);
+
+            // Sync benefits
+            $this->syncBenefits($updatedCourse, $benefits);
+
+            return $updatedCourse->load('benefits');
         });
     }
 

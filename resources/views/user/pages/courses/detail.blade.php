@@ -1,36 +1,34 @@
 @extends('user.layouts.app')
 
 @section('name')
-    {{-- Dynamic Title dari Database --}}
-    Mastering Laravel 12 & Tailwind CSS - EduSmart
+    {{ $course->title }} - EduSmart
 @endsection
 
 @section('content')
     <div class="bg-slate-900 pt-32 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="flex items-center gap-2 text-sm text-slate-400 mb-6">
-                <a href="#" class="hover:text-white transition">Home</a>
+                <a href="{{ route('home') }}" class="hover:text-white transition">Home</a>
                 <i class="ph-bold ph-caret-right text-xs"></i>
-                <a href="#" class="hover:text-white transition">Course</a>
+                <a href="{{ route('courses') }}" class="hover:text-white transition">Course</a>
                 <i class="ph-bold ph-caret-right text-xs"></i>
-                <span class="text-white font-medium">Programming</span>
+                <span class="text-white font-medium">{{ $course->category->name ?? 'Course' }}</span>
             </nav>
 
             <div class="lg:w-2/3">
                 <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
-                    Mastering Laravel 12 & Tailwind CSS: Build Modern LMS from Scratch
+                    {{ $course->title }}
                 </h1>
                 <p class="text-slate-300 text-lg mb-6 leading-relaxed">
-                    Pelajari cara membangun website Learning Management System (LMS) yang kompleks dengan fitur Payment
-                    Gateway, Role Management, dan Integrasi API.
+                    {{ $course->sub_title }}
                 </p>
 
                 <div class="flex flex-wrap items-center gap-6 text-sm text-slate-300">
                     <div class="flex items-center gap-2">
-                        <i class="ph-fill ph-student"></i> 1,204 Siswa Terdaftar
+                        <i class="ph-fill ph-books"></i> {{ $course->modules->count() }} Modul
                     </div>
                     <div class="flex items-center gap-2">
-                        <i class="ph-fill ph-clock"></i> Terakhir Diupdate: Des 2025
+                        <i class="ph-fill ph-clock"></i> Terakhir Diupdate: {{ $course->updated_at->format('M Y') }}
                     </div>
                     <div class="flex items-center gap-2">
                         <i class="ph-fill ph-globe"></i> Bahasa Indonesia
@@ -46,142 +44,126 @@
 
                 <div class="lg:col-span-2 space-y-12">
 
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8">
-                        <h2 class="text-xl font-bold text-slate-900 mb-6">Apa yang akan Anda pelajari?</h2>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="flex gap-3">
-                                <i class="ph-bold ph-check text-green-600 mt-1"></i>
-                                <span class="text-slate-700 text-sm">Memahami Konsep MVC di Laravel 12</span>
-                            </div>
-                            <div class="flex gap-3">
-                                <i class="ph-bold ph-check text-green-600 mt-1"></i>
-                                <span class="text-slate-700 text-sm">Integrasi Payment Gateway (Midtrans/Xendit)</span>
-                            </div>
-                            <div class="flex gap-3">
-                                <i class="ph-bold ph-check text-green-600 mt-1"></i>
-                                <span class="text-slate-700 text-sm">Styling Cepat dengan Tailwind CSS v4</span>
-                            </div>
-                            <div class="flex gap-3">
-                                <i class="ph-bold ph-check text-green-600 mt-1"></i>
-                                <span class="text-slate-700 text-sm">Deploy Project ke VPS/Hosting</span>
+                    {{-- Course Benefits --}}
+                    @if ($course->benefits->count() > 0)
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8">
+                            <h2 class="text-xl font-bold text-slate-900 mb-6">Apa yang akan Anda pelajari?</h2>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                @foreach ($course->benefits as $benefit)
+                                    <div class="flex gap-3">
+                                        <i class="ph-bold ph-check text-green-600 mt-1"></i>
+                                        <span class="text-slate-700 text-sm">{{ $benefit->name }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+                    @endif
 
+                    {{-- Course Curriculum --}}
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900 mb-6">Kurikulum Kursus</h2>
 
+                        @php
+                            $totalSubModules = $course->modules->sum(function ($module) {
+                                return $module->subModules->count();
+                            });
+                        @endphp
+
                         <div class="flex items-center justify-between text-sm text-slate-500 mb-4">
-                            <span>8 Modul • 42 Materi</span>
+                            <span>{{ $course->modules->count() }} Modul • {{ $totalSubModules }} Materi</span>
                             <button onclick="expandAll()" class="text-primary-600 font-bold hover:underline">Expand
                                 All</button>
                         </div>
 
-                        <div class="border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-200 bg-white">
-
-                            <div class="accordion-item" x-data="{ open: false }"> <button
-                                    class="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 transition text-left focus:outline-none"
-                                    onclick="toggleAccordion(this)">
-                                    <div class="flex items-center gap-3">
-                                        <i class="ph-bold ph-caret-down transform transition-transform duration-300"></i>
-                                        <span class="font-bold text-slate-900">Modul 1: Pendahuluan & Instalasi</span>
+                        @if ($course->modules->count() > 0)
+                            <div
+                                class="border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-200 bg-white">
+                                @foreach ($course->modules as $module)
+                                    <div class="accordion-item">
+                                        <button
+                                            class="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 transition text-left focus:outline-none"
+                                            onclick="toggleAccordion(this)">
+                                            <div class="flex items-center gap-3">
+                                                <i
+                                                    class="ph-bold ph-caret-down transform -rotate-90 transition-transform duration-300"></i>
+                                                <span class="font-bold text-slate-900">Modul {{ $module->step }}:
+                                                    {{ $module->title }}</span>
+                                            </div>
+                                            <span
+                                                class="text-xs text-slate-500 font-medium">{{ $module->subModules->count() }}
+                                                Materi</span>
+                                        </button>
+                                        <div class="accordion-content hidden">
+                                            <ul class="divide-y divide-slate-100">
+                                                @foreach ($module->subModules as $subModule)
+                                                    <li class="flex items-center justify-between p-4 hover:bg-slate-50">
+                                                        <div class="flex items-center gap-3">
+                                                            @if ($subModule->type === 'video')
+                                                                <i
+                                                                    class="ph-fill ph-play-circle text-primary-600 text-lg"></i>
+                                                            @elseif($subModule->type === 'quiz')
+                                                                <i class="ph-fill ph-question text-orange-500 text-lg"></i>
+                                                            @elseif($subModule->type === 'task')
+                                                                <i class="ph-fill ph-file-text text-purple-600 text-lg"></i>
+                                                            @else
+                                                                <i class="ph-fill ph-file text-slate-500 text-lg"></i>
+                                                            @endif
+                                                            <span
+                                                                class="text-sm text-slate-700">{{ $subModule->title }}</span>
+                                                        </div>
+                                                        <div class="flex items-center gap-4">
+                                                            <i class="ph-fill ph-lock-key text-slate-300"></i>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <span class="text-xs text-slate-500 font-medium">3 Materi</span>
-                                </button>
-                                <div class="accordion-content hidden">
-                                    <ul class="divide-y divide-slate-100">
-                                        <li class="flex items-center justify-between p-4 hover:bg-slate-50">
-                                            <div class="flex items-center gap-3">
-                                                <i class="ph-fill ph-play-circle text-primary-600 text-lg"></i>
-                                                <a href="#"
-                                                    class="text-sm text-slate-700 hover:text-primary-600">Perkenalan
-                                                    Instructor & Goals</a>
-                                            </div>
-                                            <div class="flex items-center gap-4">
-                                                <span
-                                                    class="text-xs text-primary-600 font-bold border border-primary-100 bg-primary-50 px-2 py-0.5 rounded">Preview</span>
-                                                <span class="text-xs text-slate-500">05:00</span>
-                                            </div>
-                                        </li>
-                                        <li class="flex items-center justify-between p-4 hover:bg-slate-50">
-                                            <div class="flex items-center gap-3">
-                                                <i class="ph-fill ph-question text-orange-500 text-lg"></i>
-                                                <span class="text-sm text-slate-700">Quiz: Pemahaman Dasar</span>
-                                            </div>
-                                            <div class="flex items-center gap-4">
-                                                <i class="ph-fill ph-lock-key text-slate-300"></i>
-                                                <span class="text-xs text-slate-500">5 Soal</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @endforeach
                             </div>
-
-                            <div class="accordion-item">
-                                <button
-                                    class="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 transition text-left focus:outline-none"
-                                    onclick="toggleAccordion(this)">
-                                    <div class="flex items-center gap-3">
-                                        <i
-                                            class="ph-bold ph-caret-down transform -rotate-90 transition-transform duration-300"></i>
-                                        <span class="font-bold text-slate-900">Modul 2: Database & Migration</span>
-                                    </div>
-                                    <span class="text-xs text-slate-500 font-medium">5 Materi</span>
-                                </button>
-                                <div class="accordion-content hidden">
-                                    <ul class="divide-y divide-slate-100">
-                                        <li class="flex items-center justify-between p-4 hover:bg-slate-50">
-                                            <div class="flex items-center gap-3">
-                                                <i class="ph-fill ph-file-text text-purple-600 text-lg"></i>
-                                                <span class="text-sm text-slate-700">Tugas: Merancang ERD</span>
-                                            </div>
-                                            <div class="flex items-center gap-4">
-                                                <i class="ph-fill ph-lock-key text-slate-300"></i>
-                                                <span class="text-xs text-slate-500">File Upload</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                        @else
+                            <div class="text-center py-10 border border-slate-200 rounded-2xl">
+                                <p class="text-slate-500">Kurikulum akan segera ditambahkan</p>
                             </div>
-
-                        </div>
+                        @endif
                     </div>
 
+                    {{-- Course Description --}}
                     <div class="prose prose-slate max-w-none">
                         <h2 class="text-2xl font-bold text-slate-900 mb-4 no-underline">Deskripsi Kursus</h2>
-                        <p class="text-slate-600 leading-relaxed mb-4">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates.
-                            Kursus ini didesain untuk pemula hingga tingkat lanjut. Anda akan belajar step-by-step.
-                        </p>
-                        <p class="text-slate-600 leading-relaxed">
-                            Kenapa harus Laravel 12? Karena fitur barunya sangat memudahkan developer.
-                            Dikombinasikan dengan Tailwind, Anda bisa membuat UI cantik dalam hitungan menit.
-                        </p>
-                    </div>
-
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6">
-                        <h3 class="text-lg font-bold text-slate-900 mb-4">Instructor</h3>
-                        <div class="flex gap-4">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
-                                class="w-16 h-16 rounded-full object-cover border border-slate-200" alt="Instructor">
-                            <div>
-                                <h4 class="text-lg font-bold text-slate-900 hover:text-primary-600 cursor-pointer">Dr. Budi
-                                    Santoso</h4>
-                                <p class="text-primary-600 text-sm font-medium mb-2">Senior Fullstack Developer @ Tech
-                                    Unicorn</p>
-                                <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
-                                    <span class="flex items-center gap-1"><i class="ph-fill ph-users"></i> 15,400
-                                        Siswa</span>
-                                    <span class="flex items-center gap-1"><i class="ph-fill ph-play-circle"></i> 12
-                                        Kursus</span>
-                                </div>
-                                <p class="text-slate-600 text-sm leading-relaxed">
-                                    Berpengalaman lebih dari 10 tahun di industri software development. Suka berbagi ilmu
-                                    dengan cara yang santai dan mudah dimengerti.
-                                </p>
-                            </div>
+                        <div class="text-slate-600 leading-relaxed">
+                            {!! nl2br(e($course->description)) !!}
                         </div>
                     </div>
+
+                    {{-- Instructor --}}
+                    @if ($course->user)
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4">Instructor</h3>
+                            <div class="flex gap-4">
+                                @if ($course->user->photo)
+                                    <img src="{{ asset('storage/' . $course->user->photo) }}"
+                                        class="w-16 h-16 rounded-full object-cover border border-slate-200"
+                                        alt="{{ $course->user->name }}">
+                                @else
+                                    <div
+                                        class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xl border border-primary-200">
+                                        {{ strtoupper(substr($course->user->name, 0, 2)) }}
+                                    </div>
+                                @endif
+                                <div>
+                                    <h4 class="text-lg font-bold text-slate-900 hover:text-primary-600 cursor-pointer">
+                                        {{ $course->user->name }}</h4>
+                                    <p class="text-primary-600 text-sm font-medium mb-2">Instructor</p>
+                                    @if ($course->user->bio)
+                                        <p class="text-slate-600 text-sm leading-relaxed">
+                                            {{ $course->user->bio }}
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                 </div>
 
@@ -191,39 +173,68 @@
                         <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden relative">
 
                             <div class="relative h-48 group cursor-pointer">
-                                <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2031&auto=format&fit=crop"
-                                    class="w-full h-full object-cover" alt="Course Thumbnail">
+                                @if ($course->photo)
+                                    <img src="{{ asset('storage/' . $course->photo) }}" class="w-full h-full object-cover"
+                                        alt="{{ $course->title }}">
+                                @else
+                                    <div
+                                        class="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                                        <i class="ph ph-book-open text-white text-4xl"></i>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="p-6">
                                 <div class="mb-6">
-                                    <div class="flex items-end gap-2 mb-1">
-                                        <span class="text-3xl font-extrabold text-slate-900">Rp 199.000</span>
-                                        <span class="text-sm text-slate-400 line-through mb-1">Rp 450.000</span>
-                                    </div>
-                                    <div
-                                        class="flex items-center gap-2 text-red-500 text-xs font-bold bg-red-50 px-2 py-1 rounded inline-block">
-                                        <i class="ph-fill ph-alarm"></i> Diskon 56% berakhir 2 hari lagi
-                                    </div>
+                                    @if (!$course->is_premium)
+                                        <div class="flex items-end gap-2 mb-1">
+                                            <span class="text-3xl font-extrabold text-green-600">GRATIS</span>
+                                        </div>
+                                    @elseif($course->promotional_price && $course->promotional_price < $course->price)
+                                        <div class="flex items-end gap-2 mb-1">
+                                            <span class="text-3xl font-extrabold text-slate-900">Rp
+                                                {{ number_format($course->promotional_price, 0, ',', '.') }}</span>
+                                            <span class="text-sm text-slate-400 line-through mb-1">Rp
+                                                {{ number_format($course->price, 0, ',', '.') }}</span>
+                                        </div>
+                                        @php
+                                            $discount = round(
+                                                (($course->price - $course->promotional_price) / $course->price) * 100,
+                                            );
+                                        @endphp
+                                        <div
+                                            class="flex items-center gap-2 text-red-500 text-xs font-bold bg-red-50 px-2 py-1 rounded inline-block">
+                                            <i class="ph-fill ph-tag"></i> Diskon {{ $discount }}%
+                                        </div>
+                                    @else
+                                        <div class="flex items-end gap-2 mb-1">
+                                            <span class="text-3xl font-extrabold text-slate-900">Rp
+                                                {{ number_format($course->price, 0, ',', '.') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="space-y-3 mb-6">
-                                    <button
-                                        class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
-                                        Beli Sekarang
-                                    </button>
+                                    @if ($course->is_premium)
+                                        <button
+                                            class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
+                                            Beli Sekarang
+                                        </button>
+                                    @else
+                                        <button
+                                            class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
+                                            Mulai Belajar Gratis
+                                        </button>
+                                    @endif
                                 </div>
 
                                 <div class="space-y-3 mb-6">
                                     <p class="text-xs font-bold text-slate-900 uppercase tracking-wider">Yang kamu
                                         dapatkan:</p>
                                     <ul class="text-sm text-slate-600 space-y-2">
-                                        <li class="flex items-center gap-2"><i
-                                                class="ph-fill ph-film-strip text-slate-400"></i> 10.5 Jam On-demand Video
+                                        <li class="flex items-center gap-2"><i class="ph-fill ph-books text-slate-400"></i>
+                                            {{ $course->modules->count() }} Modul Pembelajaran
                                         </li>
-                                        <li class="flex items-center gap-2"><i
-                                                class="ph-fill ph-file-arrow-down text-slate-400"></i> 5 Artikel & 12
-                                            Downloadable Resource</li>
                                         <li class="flex items-center gap-2"><i
                                                 class="ph-fill ph-device-mobile text-slate-400"></i> Akses di HP dan Laptop
                                         </li>
@@ -275,10 +286,12 @@
             // Toggle Hidden
             if (content.classList.contains('hidden')) {
                 content.classList.remove('hidden');
-                icon.classList.add('-rotate-180'); // Rotate arrow up
+                icon.classList.remove('-rotate-90');
+                icon.classList.add('-rotate-180');
             } else {
                 content.classList.add('hidden');
-                icon.classList.remove('-rotate-180'); // Rotate arrow down
+                icon.classList.remove('-rotate-180');
+                icon.classList.add('-rotate-90');
             }
         }
 
@@ -287,7 +300,10 @@
             const icons = document.querySelectorAll('.ph-caret-down');
 
             contents.forEach(c => c.classList.remove('hidden'));
-            icons.forEach(i => i.classList.add('-rotate-180'));
+            icons.forEach(i => {
+                i.classList.remove('-rotate-90');
+                i.classList.add('-rotate-180');
+            });
         }
     </script>
 @endsection

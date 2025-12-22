@@ -26,12 +26,15 @@ class CourseRequest extends FormRequest
                 'max:255',
                 Rule::unique('courses', 'title')->ignore($courseId, 'id')
             ],
+            'sub_title' => 'required|string|max:255',
             'photo' => ($this->isMethod('post') ? 'nullable|image|max:2048' : 'nullable|image|max:2048'),
             'description' => 'required|string',
             'is_premium' => 'required|boolean',
             'price' => $isPremium ? 'required|integer|min:0' : 'nullable|integer|min:0',
             'promotional_price' => 'nullable|integer|min:0',
             'is_ready' => 'sometimes|boolean',
+            'benefits' => 'nullable|array',
+            'benefits.*' => 'nullable|string|max:255',
         ];
     }
 

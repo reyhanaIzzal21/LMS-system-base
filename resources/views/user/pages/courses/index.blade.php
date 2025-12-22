@@ -28,28 +28,13 @@
                     </button>
                 </div>
             </div>
-
-            <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="text-slate-400 text-sm py-1">Populer:</span>
-                <button
-                    class="px-3 py-1 bg-slate-800 hover:bg-primary-900 text-slate-300 text-sm rounded-full transition border border-slate-700">UTBK
-                    SNBT</button>
-                <button
-                    class="px-3 py-1 bg-slate-800 hover:bg-primary-900 text-slate-300 text-sm rounded-full transition border border-slate-700">Matematika
-                    SMA</button>
-                <button
-                    class="px-3 py-1 bg-slate-800 hover:bg-primary-900 text-slate-300 text-sm rounded-full transition border border-slate-700">Bahasa
-                    Inggris</button>
-                <button
-                    class="px-3 py-1 bg-slate-800 hover:bg-primary-900 text-slate-300 text-sm rounded-full transition border border-slate-700">Coding
-                    Dasar</button>
-            </div>
         </div>
     </section>
 
     <section class="border-b border-slate-200 bg-white sticky top-[72px] z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-            <p class="text-slate-500 text-sm font-medium"><span class="text-slate-900 font-bold">124</span> Course tersedia
+            <p class="text-slate-500 text-sm font-medium"><span class="text-slate-900 font-bold">{{ $totalCourses }}</span>
+                Course tersedia
             </p>
 
             <div class="flex items-center gap-3">
@@ -74,179 +59,119 @@
 
     <section class="py-12 bg-slate-50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @if ($courses->count() > 0)
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($courses as $course)
+                        <a href="{{ route('courses.detail', $course->slug) }}"
+                            class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                            <div class="relative h-48 overflow-hidden">
+                                @if ($course->photo)
+                                    <img src="{{ asset('storage/' . $course->photo) }}" alt="{{ $course->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                @else
+                                    <div
+                                        class="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                                        <i class="ph ph-book-open text-white text-4xl"></i>
+                                    </div>
+                                @endif
 
-                <a href="{{ route('courses.detail') }}"
-                    class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop"
-                            alt="Thumbnail"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-
-                        <div class="absolute top-3 left-3 flex gap-2">
-                            <span
-                                class="bg-white/90 backdrop-blur text-primary-600 text-[10px] font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider">
-                                Matematika
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-5 flex flex-col flex-1">
-                        <div class="mb-3">
-                            <div class="flex items-center gap-1 mb-1 text-accent-500 text-xs font-bold">
-                                <i class="ph-fill ph-star"></i>
-                                <span>4.8</span>
-                                <span class="text-slate-400 font-normal">(120 Review)</span>
+                                <div class="absolute top-3 left-3 flex gap-2">
+                                    <span
+                                        class="bg-white/90 backdrop-blur text-primary-600 text-[10px] font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider">
+                                        {{ $course->category->name ?? 'Uncategorized' }}
+                                    </span>
+                                </div>
                             </div>
-                            <h3
-                                class="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-primary-600 transition-colors">
-                                Master Aljabar Linear untuk Persiapan Olimpiade
-                            </h3>
-                        </div>
 
-                        <div class="flex items-center gap-2 mb-4 mt-auto pt-4 border-t border-slate-50">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
-                                class="w-8 h-8 rounded-full object-cover border border-slate-200" alt="Avatar">
-                            <div>
-                                <p class="text-xs text-slate-500">Pemateri</p>
-                                <p class="text-xs font-bold text-slate-800">Dr. Budi Santoso</p>
+                            <div class="p-5 flex flex-col flex-1">
+                                <div class="mb-3">
+                                    <h3
+                                        class="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-primary-600 transition-colors">
+                                        {{ $course->title }}
+                                    </h3>
+                                    <p class="text-sm text-slate-500 line-clamp-2">
+                                        {{ $course->sub_title }}
+                                    </p>
+                                </div>
+
+                                <div class="flex items-center gap-2 mb-4 mt-auto pt-4 border-t border-slate-50">
+                                    @if ($course->user && $course->user->photo)
+                                        <img src="{{ asset('storage/' . $course->user->photo) }}"
+                                            class="w-8 h-8 rounded-full object-cover border border-slate-200"
+                                            alt="{{ $course->user->name }}">
+                                    @else
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xs border border-primary-200">
+                                            {{ $course->user ? strtoupper(substr($course->user->name, 0, 2)) : 'NA' }}
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <p class="text-xs text-slate-500">Pemateri</p>
+                                        <p class="text-xs font-bold text-slate-800">{{ $course->user->name ?? 'Unknown' }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    @if (!$course->is_premium)
+                                        {{-- Free Course --}}
+                                        <div class="flex flex-col">
+                                            <span class="text-lg font-bold text-green-600">GRATIS</span>
+                                        </div>
+                                        <button
+                                            class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition">
+                                            <i class="ph-bold ph-play"></i>
+                                        </button>
+                                    @elseif($course->promotional_price && $course->promotional_price < $course->price)
+                                        {{-- Promotional Price --}}
+                                        <div class="flex flex-col">
+                                            <span class="text-xs text-slate-400 line-through">Rp
+                                                {{ number_format($course->price, 0, ',', '.') }}</span>
+                                            <span class="text-lg font-bold text-primary-600">Rp
+                                                {{ number_format($course->promotional_price, 0, ',', '.') }}</span>
+                                        </div>
+                                        <button
+                                            class="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition">
+                                            <i class="ph-bold ph-shopping-cart"></i>
+                                        </button>
+                                    @else
+                                        {{-- Normal Price --}}
+                                        <div class="flex flex-col">
+                                            <span class="text-lg font-bold text-slate-900">Rp
+                                                {{ number_format($course->price, 0, ',', '.') }}</span>
+                                        </div>
+                                        <button
+                                            class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition">
+                                            <i class="ph-bold ph-shopping-cart"></i>
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-xs text-slate-400 line-through">Rp 250.000</span>
-                                <span class="text-lg font-bold text-primary-600">Rp 199.000</span>
-                            </div>
-                            <button
-                                class="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition">
-                                <i class="ph-bold ph-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </a>
-
-                <div
-                    class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=2071&auto=format&fit=crop"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-3 left-3">
-                            <span
-                                class="bg-white/90 backdrop-blur text-purple-600 text-[10px] font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider">
-                                Fisika
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-5 flex flex-col flex-1">
-                        <div class="mb-3">
-                            <div class="flex items-center gap-1 mb-1 text-accent-500 text-xs font-bold">
-                                <i class="ph-fill ph-star"></i>
-                                <span>5.0</span>
-                                <span class="text-slate-400 font-normal">(45 Review)</span>
-                            </div>
-                            <h3
-                                class="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-primary-600 transition-colors">
-                                Konsep Dasar Fisika Kuantum Mudah Dipahami
-                            </h3>
-                        </div>
-
-                        <div class="flex items-center gap-2 mb-4 mt-auto pt-4 border-t border-slate-50">
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1888&auto=format&fit=crop"
-                                class="w-8 h-8 rounded-full object-cover border border-slate-200" alt="Avatar">
-                            <div>
-                                <p class="text-xs text-slate-500">Pemateri</p>
-                                <p class="text-xs font-bold text-slate-800">Sarah Wijaya, M.Sc</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-lg font-bold text-slate-900">Rp 150.000</span>
-                            </div>
-                            <button
-                                class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition">
-                                <i class="ph-bold ph-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
+                        </a>
+                    @endforeach
                 </div>
 
-                <div
-                    class="group relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2031&auto=format&fit=crop"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-3 left-3">
-                            <span
-                                class="bg-white/90 backdrop-blur text-green-600 text-[10px] font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider">
-                                Programming
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-5 flex flex-col flex-1">
-                        <div class="mb-3">
-                            <div class="flex items-center gap-1 mb-1 text-accent-500 text-xs font-bold">
-                                <i class="ph-fill ph-star"></i>
-                                <span>4.5</span>
-                                <span class="text-slate-400 font-normal">(800+ Students)</span>
-                            </div>
-                            <h3
-                                class="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-primary-600 transition-colors">
-                                Intro to Laravel 12: From Zero to Hero
-                            </h3>
-                        </div>
-
-                        <div class="flex items-center gap-2 mb-4 mt-auto pt-4 border-t border-slate-50">
-                            <div
-                                class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xs border border-primary-200">
-                                ES</div>
-                            <div>
-                                <p class="text-xs text-slate-500">Pemateri</p>
-                                <p class="text-xs font-bold text-slate-800">EduSmart Team</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <div class="flex flex-col">
-                                <span class="text-lg font-bold text-green-600">GRATIS</span>
-                            </div>
-                            <button
-                                class="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition">
-                                <i class="ph-bold ph-play"></i>
-                            </button>
-                        </div>
-                    </div>
+                {{-- Pagination --}}
+                <div class="mt-16 flex justify-center">
+                    {{ $courses->links() }}
                 </div>
-
-            </div>
-
-            <div class="mt-16 flex justify-center">
-                <nav class="flex gap-2">
-                    <a href="#"
-                        class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-white hover:text-primary-600 hover:shadow transition"><i
-                            class="ph-bold ph-caret-left"></i></a>
-                    <a href="#"
-                        class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary-600 text-white font-bold shadow-lg shadow-primary-600/30">1</a>
-                    <a href="#"
-                        class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 font-bold hover:bg-white hover:text-primary-600 hover:shadow transition">2</a>
-                    <a href="#"
-                        class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 font-bold hover:bg-white hover:text-primary-600 hover:shadow transition">3</a>
-                    <span class="w-10 h-10 flex items-center justify-center text-slate-400">...</span>
-                    <a href="#"
-                        class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-white hover:text-primary-600 hover:shadow transition"><i
-                            class="ph-bold ph-caret-right"></i></a>
-                </nav>
-            </div>
+            @else
+                <div class="text-center py-20">
+                    <div
+                        class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                        <i class="ph-fill ph-book-open text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Belum ada course tersedia</h3>
+                    <p class="text-slate-500">Course akan segera hadir. Nantikan update terbaru dari kami!</p>
+                </div>
+            @endif
         </div>
     </section>
 @endsection
 
 @section('script')
     <script>
-        // Opsional: Animasi simple saat page load
+        // Animasi simple saat page load
         document.addEventListener("DOMContentLoaded", function() {
             const cards = document.querySelectorAll('.group');
             cards.forEach((card, index) => {

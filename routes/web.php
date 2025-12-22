@@ -26,7 +26,7 @@ Route::view('dashboard', 'dashboard')
 
 // dummy route untuk lihat slicing-an
 Route::get('/courses/dummy', function () {
-    return view('user.pages.courses.widgets.dummy');
+    return view('user.pages.courses.widgets.enrolled_course_detail');
 })->name('courses.dummy');
 
 // landing page

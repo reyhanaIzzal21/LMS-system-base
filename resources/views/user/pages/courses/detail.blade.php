@@ -26,14 +26,6 @@
                 </p>
 
                 <div class="flex flex-wrap items-center gap-6 text-sm text-slate-300">
-                    <div class="flex items-center gap-1 text-yellow-400">
-                        <span class="font-bold text-base">4.8</span>
-                        <div class="flex text-xs">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i
-                                class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <span class="text-slate-400 ml-1">(120 Reviews)</span>
-                    </div>
                     <div class="flex items-center gap-2">
                         <i class="ph-fill ph-student"></i> 1,204 Siswa Terdaftar
                     </div>
@@ -80,7 +72,7 @@
                         <h2 class="text-2xl font-bold text-slate-900 mb-6">Kurikulum Kursus</h2>
 
                         <div class="flex items-center justify-between text-sm text-slate-500 mb-4">
-                            <span>8 Modul • 42 Materi • 10h 30m Total Durasi</span>
+                            <span>8 Modul • 42 Materi</span>
                             <button onclick="expandAll()" class="text-primary-600 font-bold hover:underline">Expand
                                 All</button>
                         </div>
@@ -94,7 +86,7 @@
                                         <i class="ph-bold ph-caret-down transform transition-transform duration-300"></i>
                                         <span class="font-bold text-slate-900">Modul 1: Pendahuluan & Instalasi</span>
                                     </div>
-                                    <span class="text-xs text-slate-500 font-medium">3 Materi • 15m</span>
+                                    <span class="text-xs text-slate-500 font-medium">3 Materi</span>
                                 </button>
                                 <div class="accordion-content hidden">
                                     <ul class="divide-y divide-slate-100">
@@ -134,7 +126,7 @@
                                             class="ph-bold ph-caret-down transform -rotate-90 transition-transform duration-300"></i>
                                         <span class="font-bold text-slate-900">Modul 2: Database & Migration</span>
                                     </div>
-                                    <span class="text-xs text-slate-500 font-medium">5 Materi • 45m</span>
+                                    <span class="text-xs text-slate-500 font-medium">5 Materi</span>
                                 </button>
                                 <div class="accordion-content hidden">
                                     <ul class="divide-y divide-slate-100">
@@ -201,16 +193,6 @@
                             <div class="relative h-48 group cursor-pointer">
                                 <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2031&auto=format&fit=crop"
                                     class="w-full h-full object-cover" alt="Course Thumbnail">
-                                <div
-                                    class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition flex items-center justify-center">
-                                    <div
-                                        class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                                        <i class="ph-fill ph-play text-primary-600 text-2xl ml-1"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute bottom-4 left-0 w-full text-center">
-                                    <span class="text-white font-bold text-sm drop-shadow-md">Preview Course</span>
-                                </div>
                             </div>
 
                             <div class="p-6">
@@ -229,10 +211,6 @@
                                     <button
                                         class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
                                         Beli Sekarang
-                                    </button>
-                                    <button
-                                        class="w-full py-3 border border-slate-200 hover:border-slate-300 text-slate-700 font-bold rounded-xl transition flex items-center justify-center gap-2">
-                                        <i class="ph-bold ph-heart"></i> Tambah ke Wishlist
                                     </button>
                                 </div>
 

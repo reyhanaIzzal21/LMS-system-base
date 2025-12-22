@@ -53,6 +53,11 @@ class Course extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function benefits(): HasMany
+    {
+        return $this->hasMany(CourseBenefit::class);
+    }
+
     /**
      * Get the course's user.
      */

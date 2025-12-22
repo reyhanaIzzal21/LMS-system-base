@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->restrictOnUpdate()->restrictOnDelete();
             $table->foreignUuid('user_id')->constrained();
             $table->string('title')->unique();
+            $table->string('sub_title');
             $table->string('photo')->nullable();
             $table->string('slug')->unique();
             $table->text('description');

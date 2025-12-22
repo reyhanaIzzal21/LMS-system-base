@@ -15,6 +15,7 @@
         </div>
     </section>
 
+    {{-- filter kategori --}}
     <section class="sticky top-[65px] z-40 bg-slate-50/95 backdrop-blur py-4 border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
             <div class="flex md:justify-center gap-2 min-w-max" id="filter-container">
@@ -42,15 +43,19 @@
                     data-category="sd">
                     <div class="p-1 bg-gradient-to-r from-blue-400 to-cyan-400"></div>
                     <div class="p-8 flex-1">
+                        {{-- kategori  program--}}
                         <div class="flex justify-between items-start mb-4">
                             <span
                                 class="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold uppercase tracking-wider">SD
                                 4, 5, 6</span>
                         </div>
+                        {{-- title --}}
                         <h3 class="text-2xl font-bold text-slate-900 mb-2">Pintar Dasar</h3>
+                        {{-- sub title --}}
                         <p class="text-slate-500 text-sm mb-6">Pondasi kuat untuk mata pelajaran dasar Matematika & IPA.
                         </p>
 
+                        {{-- program benefit --}}
                         <div class="space-y-3 mb-8">
                             <div class="flex items-center gap-3 text-slate-700 text-sm">
                                 <i class="ph-fill ph-check-circle text-green-500 text-lg"></i>
@@ -67,8 +72,10 @@
                         </div>
                     </div>
                     <div class="p-8 pt-0 border-t border-slate-100 mt-auto">
+                        {{-- promotional price --}}
                         <p class="text-slate-400 text-xs line-through mb-1">Rp 250.000</p>
                         <div class="flex items-end gap-1 mb-4">
+                            {{-- price --}}
                             <span class="text-3xl font-bold text-slate-900">Rp 150rb</span>
                             <span class="text-slate-500 text-sm mb-1">/bulan</span>
                         </div>

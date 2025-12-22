@@ -89,10 +89,6 @@
                                 Matematika
                             </span>
                         </div>
-                        <button
-                            class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur hover:bg-white text-white hover:text-red-500 rounded-full flex items-center justify-center transition">
-                            <i class="ph-fill ph-heart"></i>
-                        </button>
                     </div>
 
                     <div class="p-5 flex flex-col flex-1">
@@ -141,10 +137,6 @@
                                 Fisika
                             </span>
                         </div>
-                        <button
-                            class="absolute top-3 right-3 w-8 h-8 bg-white/20 backdrop-blur hover:bg-white text-white hover:text-red-500 rounded-full flex items-center justify-center transition">
-                            <i class="ph-fill ph-heart"></i>
-                        </button>
                     </div>
 
                     <div class="p-5 flex flex-col flex-1">

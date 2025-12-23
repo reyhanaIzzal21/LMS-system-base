@@ -38,20 +38,19 @@ Route::get('event', [HomeController::class, 'event'])->name('event');
 Route::get('blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('testimoni', [HomeController::class, 'testimoni'])->name('testimoni');
 
-// Free course enrollment (authenticated users only)
-Route::post('courses/{slug}/enroll-free', [EnrolledCourseController::class, 'enrollFree'])
-    ->middleware('auth')
-    ->name('courses.enroll-free');
-
-// Enrolled course routes (authenticated users only)
-Route::middleware(['auth'])->prefix('learn')->name('learn.')->group(function () {
-    Route::get('/{courseSlug}', [EnrolledCourseController::class, 'index'])->name('index');
-    Route::get('/{courseSlug}/{subModuleSlug}', [EnrolledCourseController::class, 'show'])->name('show');
-    Route::post('/complete/{subModule}', [EnrolledCourseController::class, 'markComplete'])->name('complete');
-    Route::post('/incomplete/{subModule}', [EnrolledCourseController::class, 'markIncomplete'])->name('incomplete');
-});
-
 Route::middleware(['auth'])->group(function () {
+    // Free course enrollment (authenticated users only)
+    Route::post('courses/{slug}/enroll-free', [EnrolledCourseController::class, 'enrollFree'])->name('courses.enroll-free');
+
+    // Enrolled course routes (authenticated users only)
+    Route::prefix('learn')->name('learn.')->group(function () {
+        Route::get('/{courseSlug}', [EnrolledCourseController::class, 'index'])->name('index');
+        Route::get('/{courseSlug}/{subModuleSlug}', [EnrolledCourseController::class, 'show'])->name('show');
+        Route::post('/complete/{subModule}', [EnrolledCourseController::class, 'markComplete'])->name('complete');
+        Route::post('/incomplete/{subModule}', [EnrolledCourseController::class, 'markIncomplete'])->name('incomplete');
+    });
+
+
     // Route Prefix admin
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::view('dashboard', 'admin.pages.dashboard')->name('admin.dashboard');

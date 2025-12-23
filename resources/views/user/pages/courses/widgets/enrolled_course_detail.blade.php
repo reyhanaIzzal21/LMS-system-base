@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 
 @section('name')
-    Modul 1: Instalasi & Konfigurasi - EduSmart
+    {{ $currentSubModule->title }} - {{ $course->title }} - EduSmart
 @endsection
 
 @section('style')
@@ -89,13 +89,59 @@
             }
         }
 
-        // 3. Logic Mark as Complete (Dummy Alert)
+        // 3. Logic Mark as Complete (AJAX)
         const toggle = document.getElementById('mark-complete');
-        toggle.addEventListener('change', function() {
-            if (this.checked) {
-                // Di sini nanti panggil API Laravel
-                console.log('Materi selesai!');
-            }
-        });
+        if (toggle) {
+            toggle.addEventListener('change', function() {
+                const subModuleId = this.dataset.submoduleId;
+                const isChecked = this.checked;
+                const url = isChecked ?
+                    '{{ route('learn.complete', ':id') }}'.replace(':id', subModuleId) :
+                    '{{ route('learn.incomplete', ':id') }}'.replace(':id', subModuleId);
+
+                fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update progress bar
+                            const progressBar = document.getElementById('progress-bar');
+                            const progressText = document.getElementById('progress-text');
+                            const progressCount = document.getElementById('progress-count');
+
+                            if (progressBar) {
+                                progressBar.style.width = data.progress + '%';
+                            }
+                            if (progressText) {
+                                progressText.textContent = data.progress + '% Selesai';
+                            }
+                            if (progressCount) {
+                                progressCount.textContent = data.completed_count + '/' + data.total + ' Item';
+                            }
+
+                            // Update sidebar item styling
+                            const sidebarItem = document.querySelector(`[data-submodule-id="${subModuleId}"]`);
+                            if (sidebarItem) {
+                                if (isChecked) {
+                                    sidebarItem.classList.add('completed');
+                                } else {
+                                    sidebarItem.classList.remove('completed');
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Revert checkbox state on error
+                        toggle.checked = !isChecked;
+                    });
+            });
+        }
     </script>
 @endsection

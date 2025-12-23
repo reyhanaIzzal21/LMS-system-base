@@ -80,16 +80,58 @@ class User extends Authenticatable
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
 
     // Relations
     /**
-     * Get the user's courses.
+     * Get the user's courses (as teacher/author).
      */
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
+    }
+
+    /**
+     * Get the user's enrollments.
+     */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /**
+     * Get the courses the user is enrolled in.
+     */
+    public function enrolledCourses()
+    {
+        return $this->belongsToMany(Course::class, 'enrollments')
+            ->withPivot('enrolled_at')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the user's completed sub-modules.
+     */
+    public function completedSubModules(): HasMany
+    {
+        return $this->hasMany(UserSubModuleProgress::class);
+    }
+
+    /**
+     * Check if user is enrolled in a course.
+     */
+    public function isEnrolledIn($courseId): bool
+    {
+        return $this->enrollments()->where('course_id', $courseId)->exists();
+    }
+
+    /**
+     * Check if user has completed a sub-module.
+     */
+    public function hasCompleted($subModuleId): bool
+    {
+        return $this->completedSubModules()->where('sub_module_id', $subModuleId)->exists();
     }
 }

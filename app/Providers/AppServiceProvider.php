@@ -10,12 +10,14 @@ use App\Contracts\Interfaces\CategoryInterface;
 use App\Contracts\Interfaces\ProgramInterface;
 use App\Contracts\Interfaces\SubModuleInterface;
 use App\Contracts\Interfaces\ProgramCategoryInterface;
+use App\Contracts\Interfaces\EnrolledCourseInterface;
 use App\Contracts\Repositories\CourseRepository;
 use App\Contracts\Repositories\ModuleRepository;
 use App\Contracts\Repositories\ProgramRepository;
 use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Repositories\SubModuleRepository;
 use App\Contracts\Repositories\ProgramCategoryRepository;
+use App\Contracts\Repositories\EnrolledCourseRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SubModuleInterface::class, SubModuleRepository::class);
         $this->app->bind(ProgramCategoryInterface::class, ProgramCategoryRepository::class);
         $this->app->bind(ProgramInterface::class, ProgramRepository::class);
+        $this->app->bind(EnrolledCourseInterface::class, EnrolledCourseRepository::class);
     }
 
     /**

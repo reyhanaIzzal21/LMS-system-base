@@ -216,15 +216,42 @@
 
                                 <div class="space-y-3 mb-6">
                                     @if ($course->is_premium)
+                                        {{-- Premium Course - Beli Sekarang --}}
                                         <button
                                             class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
+                                            <i class="ph-fill ph-shopping-cart"></i>
                                             Beli Sekarang
                                         </button>
                                     @else
-                                        <button
-                                            class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
-                                            Mulai Belajar Gratis
-                                        </button>
+                                        {{-- Free Course --}}
+                                        @auth
+                                            @if ($isEnrolled)
+                                                {{-- Already Enrolled - Continue Learning --}}
+                                                <a href="{{ route('learn.index', $course->slug) }}"
+                                                    class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
+                                                    <i class="ph-fill ph-play"></i>
+                                                    Lanjutkan Belajar
+                                                </a>
+                                            @else
+                                                {{-- Not Enrolled - Enroll Now --}}
+                                                <form action="{{ route('courses.enroll-free', $course->slug) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
+                                                        <i class="ph-fill ph-play"></i>
+                                                        Mulai Belajar Gratis
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @else
+                                            {{-- Not Logged In - Redirect to Login --}}
+                                            <a href="{{ route('login') }}?redirect={{ urlencode(request()->url()) }}"
+                                                class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
+                                                <i class="ph-fill ph-sign-in"></i>
+                                                Login untuk Mulai Belajar
+                                            </a>
+                                        @endauth
                                     @endif
                                 </div>
 
@@ -232,7 +259,8 @@
                                     <p class="text-xs font-bold text-slate-900 uppercase tracking-wider">Yang kamu
                                         dapatkan:</p>
                                     <ul class="text-sm text-slate-600 space-y-2">
-                                        <li class="flex items-center gap-2"><i class="ph-fill ph-books text-slate-400"></i>
+                                        <li class="flex items-center gap-2"><i
+                                                class="ph-fill ph-books text-slate-400"></i>
                                             {{ $course->modules->count() }} Modul Pembelajaran
                                         </li>
                                         <li class="flex items-center gap-2"><i

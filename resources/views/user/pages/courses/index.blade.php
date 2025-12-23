@@ -57,8 +57,6 @@
         </div>
     </section>
 
-    <a href="{{ route('courses.dummy') }}">Dummy</a>
-
     <section class="py-12 bg-slate-50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if ($courses->count() > 0)

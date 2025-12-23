@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserCourseController extends Controller
 {
@@ -26,6 +27,9 @@ class UserCourseController extends Controller
             ->with(['category', 'user', 'benefits', 'modules.subModules'])
             ->firstOrFail();
 
-        return view('user.pages.courses.detail', compact('course'));
+        // Check if user is enrolled
+        $isEnrolled = Auth::check() && Auth::user()->isEnrolledIn($course->id);
+
+        return view('user.pages.courses.detail', compact('course', 'isEnrolled'));
     }
 }

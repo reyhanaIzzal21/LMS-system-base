@@ -72,4 +72,9 @@ class Course extends Model
     {
         return $this->hasMany(Module::class)->orderBy('step', 'asc');
     }
+
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }

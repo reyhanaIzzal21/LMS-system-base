@@ -216,12 +216,34 @@
 
                                 <div class="space-y-3 mb-6">
                                     @if ($course->is_premium)
-                                        {{-- Premium Course - Beli Sekarang --}}
-                                        <button
-                                            class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
-                                            <i class="ph-fill ph-shopping-cart"></i>
-                                            Beli Sekarang
-                                        </button>
+                                        {{-- Premium Course --}}
+                                        @auth
+                                            @if ($isEnrolled)
+                                                {{-- Already Enrolled (grandfathered or paid) - Continue Learning --}}
+                                                <a href="{{ route('learn.index', $course->slug) }}"
+                                                    class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition shadow-lg shadow-green-600/30 flex items-center justify-center gap-2">
+                                                    <i class="ph-fill ph-play"></i>
+                                                    Lanjutkan Belajar
+                                                </a>
+                                            @else
+                                                {{-- Not Enrolled - Buy Now --}}
+                                                <form action="{{ route('courses.checkout', $course->slug) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
+                                                        <i class="ph-fill ph-shopping-cart"></i>
+                                                        Beli Sekarang
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @else
+                                            {{-- Not Logged In - Redirect to Login --}}
+                                            <a href="{{ route('login') }}?redirect={{ urlencode(request()->url()) }}"
+                                                class="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition shadow-lg shadow-primary-600/30 flex items-center justify-center gap-2">
+                                                <i class="ph-fill ph-sign-in"></i>
+                                                Login untuk Membeli
+                                            </a>
+                                        @endauth
                                     @else
                                         {{-- Free Course --}}
                                         @auth

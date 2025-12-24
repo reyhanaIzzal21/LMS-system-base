@@ -11,6 +11,7 @@ use App\Contracts\Interfaces\ProgramInterface;
 use App\Contracts\Interfaces\SubModuleInterface;
 use App\Contracts\Interfaces\ProgramCategoryInterface;
 use App\Contracts\Interfaces\EnrolledCourseInterface;
+use App\Contracts\Interfaces\TransactionInterface;
 use App\Contracts\Repositories\CourseRepository;
 use App\Contracts\Repositories\ModuleRepository;
 use App\Contracts\Repositories\ProgramRepository;
@@ -18,6 +19,7 @@ use App\Contracts\Repositories\CategoryRepository;
 use App\Contracts\Repositories\SubModuleRepository;
 use App\Contracts\Repositories\ProgramCategoryRepository;
 use App\Contracts\Repositories\EnrolledCourseRepository;
+use App\Contracts\Repositories\TransactionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProgramCategoryInterface::class, ProgramCategoryRepository::class);
         $this->app->bind(ProgramInterface::class, ProgramRepository::class);
         $this->app->bind(EnrolledCourseInterface::class, EnrolledCourseRepository::class);
+        $this->app->bind(TransactionInterface::class, TransactionRepository::class);
     }
 
     /**

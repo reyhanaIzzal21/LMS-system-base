@@ -16,6 +16,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\UserProgramController;
 use App\Http\Controllers\EnrolledCourseController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     return view('user.pages.home');
@@ -26,9 +27,9 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // dummy route untuk lihat slicing-an
-Route::get('/courses/dummy', function () {
-    return view('user.pages.courses.widgets.enrolled_course_detail');
-})->name('courses.dummy');
+// Route::get('/courses/dummy', function () {
+//     return view('user.pages.courses.widgets.enrolled_course_detail');
+// })->name('courses.dummy');
 
 // landing page
 Route::get('courses', [UserCourseController::class, 'index'])->name('courses');
@@ -38,9 +39,16 @@ Route::get('event', [HomeController::class, 'event'])->name('event');
 Route::get('blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('testimoni', [HomeController::class, 'testimoni'])->name('testimoni');
 
+// Payment notification webhook (no auth - Midtrans calls this)
+Route::post('payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
+
 Route::middleware(['auth'])->group(function () {
     // Free course enrollment (authenticated users only)
     Route::post('courses/{slug}/enroll-free', [EnrolledCourseController::class, 'enrollFree'])->name('courses.enroll-free');
+
+    // Payment routes (authenticated users)
+    Route::post('courses/{slug}/checkout', [PaymentController::class, 'checkout'])->name('courses.checkout');
+    Route::get('payment/finish', [PaymentController::class, 'finish'])->name('payment.finish');
 
     // Enrolled course routes (authenticated users only)
     Route::prefix('learn')->name('learn.')->group(function () {

@@ -203,7 +203,7 @@
                     </li>
 
                     <li class="hs-accordion sidebar-item" id="blog-accordion">
-                        <a href="transaction" class="hs-accordion-toggle sidebar-link dropdown-menu-link  ">
+                        <a href="#transaction" class="hs-accordion-toggle sidebar-link dropdown-menu-link  ">
                             <i class="ti ti-app-window text-xl flex-shrink-0"></i> <span
                                 class="hide-menu">Transaction</span>
                             <span class="hide-menu ms-auto">

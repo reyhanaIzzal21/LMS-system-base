@@ -28,9 +28,9 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // dummy route untuk lihat slicing-an
-// Route::get('/courses/dummy', function () {
-//     return view('user.pages.courses.widgets.enrolled_course_detail');
-// })->name('courses.dummy');
+Route::get('/student/dashboard', function () {
+    return view('student.pages.dashboard');
+})->name('student.dashboard');
 
 // landing page
 Route::get('courses', [UserCourseController::class, 'index'])->name('courses');
@@ -139,9 +139,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Route Prefix student
-    Route::prefix('student')->middleware('role:student')->group(function () {
-        Route::view('dashboard', 'student.pages.dashboard')->name('student.dashboard');
-    });
+    // Route::prefix('student')->middleware('role:student')->group(function () {
+    //     Route::view('dashboard', 'student.pages.dashboard')->name('student.dashboard');
+    // });
 
     Route::redirect('settings', 'settings/profile');
 

@@ -170,13 +170,6 @@
                         <a class="sidebar-link gap-3 py-3 px-3  rounded-md  w-full flex items-center hover:text-primary hover:bg-primary/15"
                             href="#">
                             <i class="ti ti-layout-dashboard  text-xl"></i>
-                            <span>Divisi(FE)</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link gap-3 py-3 px-3  rounded-md  w-full flex items-center hover:text-primary hover:bg-primary/15"
-                            href="#">
-                            <i class="ti ti-layout-dashboard  text-xl"></i>
                             <span>Teacher</span>
                         </a>
                     </li>

@@ -65,10 +65,10 @@
                             class="flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-lg hover:bg-slate-50 transition">
                             <i class="ti ti-arrow-left"></i> Back
                         </a>
-                        <button
+                        <a href="{{ route('programs.edit', $program->id) }}"
                             class="flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-lg hover:bg-slate-50 transition">
                             <i class="ti ti-settings"></i> Settings
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

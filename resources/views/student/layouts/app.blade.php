@@ -33,7 +33,18 @@
 
     @include('user.layouts.header')
 
-    @yield('content')
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            {{-- sidebar --}}
+            @include('student.layouts.sidebar')
+
+            {{-- Main Content --}}
+            {{-- note: (add this value to main-content) 'lg:col-span-9 space-y-8' --}}
+            @yield('content')
+
+        </div>
+    </div>
 
     @include('user.layouts.footer')
 

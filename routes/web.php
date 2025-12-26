@@ -32,6 +32,10 @@ Route::get('/student/dashboard', function () {
     return view('student.pages.dashboard');
 })->name('student.dashboard');
 
+Route::get('/student/course', function () {
+    return view('student.pages.course');
+})->name('student.course');
+
 // landing page
 Route::get('courses', [UserCourseController::class, 'index'])->name('courses');
 Route::get('courses/{slug}', [UserCourseController::class, 'show'])->name('courses.detail');

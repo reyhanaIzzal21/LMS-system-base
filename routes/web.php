@@ -17,6 +17,7 @@ use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\UserProgramController;
 use App\Http\Controllers\EnrolledCourseController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TeacherProgramController;
 
 Route::get('/', function () {
     return view('user.pages.home');
@@ -131,6 +132,10 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/sub-modules/{subModule}', [TeacherSubModuleController::class, 'destroy'])->name('sub-modules.destroy');
         Route::patch('/sub-modules/{subModule}/move-up', [TeacherSubModuleController::class, 'moveUp'])->name('sub-modules.move-up');
         Route::patch('/sub-modules/{subModule}/move-down', [TeacherSubModuleController::class, 'moveDown'])->name('sub-modules.move-down');
+
+        //  Program management
+        Route::get('programs', [TeacherProgramController::class, 'index'])->name('programs.index');
+        Route::get('programs/{slug}/show', [TeacherProgramController::class, 'show'])->name('programs.show');
     });
 
     // Route Prefix student

@@ -1,8 +1,9 @@
 @extends('student.layouts.app')
 
-@section('name')
-    Dashboard Belajar Saya - EduSmart
+@section('title')
+    Dashboard Belajar Saya
 @endsection
+
 
 @section('content')
     <div class="lg:col-span-9 space-y-8">

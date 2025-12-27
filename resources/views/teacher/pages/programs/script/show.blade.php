@@ -35,20 +35,16 @@
         // 2. Event Listener for Tab Clicks
         tabs.forEach(tab => {
             tab.addEventListener('click', function(e) {
-                // Kita biarkan default behavior href="#..." berjalan agar URL berubah
                 const target = this.getAttribute('data-target');
-
-                // Panggil fungsi switch UI
                 switchTab(target);
             });
         });
 
         // 3. Logic: Check URL Hash on Page Load (Persistence)
-        const hash = window.location.hash.substring(1); // remove '#'
+        const hash = window.location.hash.substring(1);
         if (hash && document.getElementById(hash)) {
             switchTab(hash);
         } else {
-            // Default to first tab if no hash
             switchTab('description');
         }
 
@@ -59,5 +55,31 @@
                 switchTab(newHash);
             }
         });
+
+        // 5. Initialize teacher search
+        initializeTeacherSearch();
     });
+
+    // Teacher Search Functionality
+    function initializeTeacherSearch() {
+        const searchInput = document.getElementById('teacher-search');
+        const teacherCards = document.querySelectorAll('.teacher-card');
+
+        if (!searchInput || !teacherCards.length) return;
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+
+            teacherCards.forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                const email = card.getAttribute('data-email') || '';
+
+                if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
 </script>

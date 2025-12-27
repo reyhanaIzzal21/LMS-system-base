@@ -1,7 +1,7 @@
 @extends('teacher.layouts.app')
 
 @section('title')
-    Detail Program: Intensif UTBK SNBT 2025
+    Detail Program: {{ $program->title }}
 @endsection
 
 @section('content')
@@ -15,45 +15,68 @@
                     <div class="w-full md:w-64 flex-shrink-0">
                         <div
                             class="aspect-video rounded-xl overflow-hidden border border-slate-200 shadow-sm relative group">
-                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
-                                class="w-full h-full object-cover" alt="Thumbnail">
+                            @if ($program->thumbnail)
+                                <img src="{{ asset('storage/' . $program->thumbnail) }}" class="w-full h-full object-cover"
+                                    alt="{{ $program->title }}">
+                            @else
+                                <div class="w-full h-full bg-slate-200 flex items-center justify-center">
+                                    <i class="ti ti-photo text-4xl text-slate-400"></i>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="flex-1 w-full">
                         <div class="flex items-center gap-3 mb-3">
-                            <span
-                                class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold uppercase tracking-wider border border-purple-200">
-                                Intensif UTBK
-                            </span>
-                            <span
-                                class="flex items-center gap-1 text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">
-                                <i class="ti ti-calendar-clock"></i> Berakhir: 20 Mei 2025
-                            </span>
+                            @if ($program->category)
+                                <span
+                                    class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold uppercase tracking-wider border border-purple-200">
+                                    {{ $program->category->name }}
+                                </span>
+                            @endif
+                            @if ($program->end_date)
+                                <span
+                                    class="flex items-center gap-1 text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">
+                                    <i class="ti ti-calendar-clock"></i> Berakhir: {{ $program->end_date->format('d M Y') }}
+                                </span>
+                            @endif
                         </div>
 
-                        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Program Super Intensif UTBK SNBT 2025
+                        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{{ $program->title }}
                         </h1>
-                        <p class="text-slate-500 text-lg mb-4">Batch Gelombang 1 - Fokus Skolastik & Literasi</p>
+                        @if ($program->sub_title)
+                            <p class="text-slate-500 text-lg mb-4">{{ $program->sub_title }}</p>
+                        @endif
 
                         <div class="flex flex-wrap items-end gap-4 mt-auto">
                             <div>
                                 <p class="text-xs text-slate-400 mb-1">Harga Program</p>
                                 <div class="flex items-end gap-2">
-                                    <span class="text-2xl font-bold text-primary-600">Rp 850.000</span>
-                                    <span class="text-sm text-slate-400 line-through mb-1">Rp 1.200.000</span>
+                                    @if ($program->is_premium)
+                                        @if ($program->promotional_price && $program->promotional_price > 0)
+                                            <span class="text-2xl font-bold text-primary-600">Rp
+                                                {{ number_format($program->promotional_price, 0, ',', '.') }}</span>
+                                            <span class="text-sm text-slate-400 line-through mb-1">Rp
+                                                {{ number_format($program->price, 0, ',', '.') }}</span>
+                                        @else
+                                            <span class="text-2xl font-bold text-primary-600">Rp
+                                                {{ number_format($program->price, 0, ',', '.') }}</span>
+                                        @endif
+                                    @else
+                                        <span class="text-2xl font-bold text-green-600">Gratis</span>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="border-l border-slate-200 pl-4 ml-2">
                                 <p class="text-xs text-slate-400 mb-1">Total Siswa</p>
-                                <p class="text-xl font-bold text-slate-800">145 <span
+                                <p class="text-xl font-bold text-slate-800">0 <span
                                         class="text-sm font-normal text-slate-500">Siswa</span></p>
                             </div>
 
                             <div class="border-l border-slate-200 pl-4">
                                 <p class="text-xs text-slate-400 mb-1">Total Guru</p>
-                                <p class="text-xl font-bold text-slate-800">8 <span
+                                <p class="text-xl font-bold text-slate-800">{{ $program->teachers->count() }} <span
                                         class="text-sm font-normal text-slate-500">Pengajar</span></p>
                             </div>
                         </div>
@@ -82,7 +105,8 @@
                         data-target="teachers">
                         <i class="ti ti-chalkboard-teacher mr-2 text-lg"></i>
                         Daftar Guru
-                        <span class="ml-2 bg-slate-100 text-slate-600 py-0.5 px-2 rounded-full text-xs">8</span>
+                        <span
+                            class="ml-2 bg-slate-100 text-slate-600 py-0.5 px-2 rounded-full text-xs">{{ $program->teachers->count() }}</span>
                     </a>
 
                     <a href="#students"
@@ -90,7 +114,7 @@
                         data-target="students">
                         <i class="ti ti-users mr-2 text-lg"></i>
                         Data Siswa
-                        <span class="ml-2 bg-slate-100 text-slate-600 py-0.5 px-2 rounded-full text-xs">145</span>
+                        <span class="ml-2 bg-slate-100 text-slate-600 py-0.5 px-2 rounded-full text-xs">0</span>
                     </a>
                 </nav>
             </div>

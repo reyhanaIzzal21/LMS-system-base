@@ -30,7 +30,9 @@
             <form id="confirmForm" method="POST" class="w-full">
                 @csrf
                 @method('PATCH')
+                <!-- Both fields for compatibility -->
                 <input type="hidden" name="is_ready" id="confirmIsReady">
+                <input type="hidden" name="is_active" id="confirmIsActive">
 
                 <button type="submit" id="confirmButton"
                     class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700">
@@ -42,19 +44,24 @@
 </div>
 
 <script>
-    function openConfirmModal(actionUrl, title, description, isReadyValue, buttonText = 'Ya, Lanjutkan',
+    function openConfirmModal(actionUrl, title, description, statusValue, buttonText = 'Ya, Lanjutkan',
         buttonColorClass = 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/20') {
         const modal = document.getElementById('modal-confirm');
         const form = document.getElementById('confirmForm');
         const titleEl = document.getElementById('confirmModalTitle');
         const text = document.getElementById('confirmModalText');
         const isReadyInput = document.getElementById('confirmIsReady');
+        const isActiveInput = document.getElementById('confirmIsActive');
         const confirmBtn = document.getElementById('confirmButton');
 
         form.action = actionUrl;
         titleEl.innerHTML = title;
         text.innerHTML = description;
-        isReadyInput.value = isReadyValue;
+
+        // Set both values for compatibility with courses (is_ready) and programs (is_active)
+        isReadyInput.value = statusValue;
+        isActiveInput.value = statusValue;
+
         confirmBtn.innerHTML = buttonText;
 
         // Reset classes

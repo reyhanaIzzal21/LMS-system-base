@@ -89,6 +89,15 @@
                                 <span
                                     class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Premium</span>
                             @endif
+
+                            {{-- Status Badge --}}
+                            @if ($program->is_active)
+                                <span
+                                    class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Aktif</span>
+                            @else
+                                <span
+                                    class="bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Nonaktif</span>
+                            @endif
                         </div>
                     </div>
 

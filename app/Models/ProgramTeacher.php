@@ -15,14 +15,4 @@ class ProgramTeacher extends Model
         'program_id',
         'user_id',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function program(): BelongsTo
-    {
-        return $this->belongsTo(Program::class);
-    }
 }

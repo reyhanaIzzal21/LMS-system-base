@@ -6,10 +6,6 @@
                 <input type="text" placeholder="Cari nama atau email siswa..."
                     class="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 text-sm">
             </div>
-            <button
-                class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 shadow-lg shadow-primary-600/20 transition w-full sm:w-auto justify-center">
-                <i class="ti ti-plus"></i> Tambah Siswa
-            </button>
         </div>
 
         <div class="overflow-x-auto">

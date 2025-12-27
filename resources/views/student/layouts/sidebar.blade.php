@@ -4,10 +4,8 @@
         {{-- Profile --}}
         <div
             class="bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-br from-primary-600 to-indigo-600">
-            </div>
 
-            <div class="relative w-24 h-24 mx-auto mt-8 mb-4">
+            <div class="relative w-24 h-24 mx-auto mb-4">
                 <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=200&auto=format&fit=crop"
                     class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" alt="Profile">
                 <button

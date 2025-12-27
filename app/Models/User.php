@@ -140,4 +140,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Program::class, 'program_teachers');
     }
+    
+    // has many student
+    public function students(): HasMany
+    {
+        return $this->hasMany(ProgramEnrollment::class);
+    }
 }

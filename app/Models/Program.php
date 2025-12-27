@@ -70,4 +70,9 @@ class Program extends Model
     {
         return $this->belongsToMany(User::class, 'program_teachers');
     }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(ProgramEnrollment::class);
+    }
 }

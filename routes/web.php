@@ -29,6 +29,12 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // dummy route untuk lihat slicing-an
+Route::get('program/show', function () {
+    return view('user.pages.program.detail');
+})->name('program.show');
+Route::get('program/show/form', function () {
+    return view('user.pages.program.enrollments.form');
+})->name('program.show.form');
 Route::get('/student/dashboard', function () {
     return view('student.pages.dashboard');
 })->name('student.dashboard');

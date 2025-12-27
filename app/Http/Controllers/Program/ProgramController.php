@@ -72,6 +72,9 @@ class ProgramController extends Controller
             abort(404);
         }
 
+        // Load relationships
+        $program->load(['teachers', 'benefits', 'category']);
+
         return view('admin.pages.programs.show', compact('program'));
     }
 

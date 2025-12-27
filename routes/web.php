@@ -8,6 +8,7 @@ use App\Http\Controllers\Course\ModuleController;
 use App\Http\Controllers\Course\CategoryController;
 use App\Http\Controllers\Course\SubModuleController;
 use App\Http\Controllers\Program\ProgramController;
+use App\Http\Controllers\Program\ProgramTeacherController;
 use App\Http\Controllers\Program\ProgramCategoryController;
 use App\Http\Controllers\Teacher\TeacherCourseController;
 use App\Http\Controllers\Teacher\TeacherModuleController;
@@ -105,6 +106,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('programs', ProgramController::class)->except(['show']);
         Route::get('programs/{slug}/show', [ProgramController::class, 'show'])->name('programs.show');
         Route::patch('/programs/{program}/toggle-active', [ProgramController::class, 'toggleActive'])->name('programs.toggle-active');
+
+        // Program Teachers Management
+        Route::get('programs/{program}/teachers', [ProgramTeacherController::class, 'getAvailableTeachers'])->name('program-teachers.available');
+        Route::post('programs/{program}/teachers', [ProgramTeacherController::class, 'store'])->name('program-teachers.store');
+        Route::delete('programs/{program}/teachers/{user}', [ProgramTeacherController::class, 'destroy'])->name('program-teachers.destroy');
     });
 
     // Route Prefix teacher

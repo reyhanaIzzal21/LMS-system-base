@@ -6,37 +6,27 @@
 
         <div class="grid lg:grid-cols-3 gap-12">
             <div class="lg:col-span-2 prose prose-slate max-w-none text-slate-600">
-                <p>
-                    Program Intensif UTBK SNBT 2025 dirancang khusus untuk siswa kelas 12 dan gap year yang
-                    ingin memaksimalkan persiapan menuju PTN impian.
-                    Dengan metode belajar <strong>Conceptual Understanding</strong>, siswa tidak hanya menghafal
-                    rumus tapi memahami konsep dasar.
-                </p>
-                <p>
-                    Kurikulum disesuaikan dengan standar terbaru SNPMB BPPP Kemendikbudristek.
-                </p>
+                @if ($program->description)
+                    {!! $program->description !!}
+                @else
+                    <p class="text-slate-400 italic">Belum ada deskripsi untuk program ini.</p>
+                @endif
             </div>
 
             <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
                 <h3 class="font-bold text-slate-900 mb-4">Benefit Program</h3>
-                <ul class="space-y-3">
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <i class="ti ti-circle-check text-green-500 text-lg mt-0.5"></i>
-                        <span>Akses LMS Seumur Hidup</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <i class="ti ti-circle-check text-green-500 text-lg mt-0.5"></i>
-                        <span>20x Tryout IRT System</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <i class="ti ti-circle-check text-green-500 text-lg mt-0.5"></i>
-                        <span>Konsultasi Jurusan by Psikolog</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-sm text-slate-700">
-                        <i class="ti ti-circle-check text-green-500 text-lg mt-0.5"></i>
-                        <span>Modul Cetak Eksklusif (Dikirim ke Rumah)</span>
-                    </li>
-                </ul>
+                @if ($program->benefits && $program->benefits->count() > 0)
+                    <ul class="space-y-3">
+                        @foreach ($program->benefits as $benefit)
+                            <li class="flex items-start gap-3 text-sm text-slate-700">
+                                <i class="ti ti-circle-check text-green-500 text-lg mt-0.5"></i>
+                                <span>{{ $benefit->name }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-slate-400 text-sm italic">Belum ada benefit untuk program ini.</p>
+                @endif
             </div>
         </div>
     </div>
